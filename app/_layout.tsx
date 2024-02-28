@@ -1,9 +1,8 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import * as SecureStore from "expo-secure-store";
 import { SessionProvider } from "@/context/ctx";
 import { PaperProvider } from "react-native-paper";
 
@@ -44,9 +43,9 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack>
-      <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-      <Stack.Screen name="(app)" options={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(sign-in)"></Stack.Screen>
+      <Stack.Screen name="(app)"></Stack.Screen>
     </Stack>
   );
 }
