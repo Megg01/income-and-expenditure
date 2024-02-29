@@ -39,7 +39,9 @@ const style = StyleSheet.create({
   button: {
     borderRadius: 4,
     minWidth: "80%",
+    marginTop: 10,
     marginBottom: 10,
+    padding: 5,
   },
   label: {},
 });

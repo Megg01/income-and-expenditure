@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
-import { Platform, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
+import Colors from "@/constants/Colors";
 
 export default function TabsLayout() {
   return (
@@ -10,8 +11,14 @@ export default function TabsLayout() {
         options={{
           tabBarLabel: "Нүүр",
           title: "Нүүр",
+          tabBarActiveTintColor: Colors.tabIconFocused,
           tabBarIcon: ({ focused }) => (
-            <AntDesign size={28} style={{ marginBottom: -3 }} name="home" />
+            <AntDesign
+              size={28}
+              style={{ marginBottom: -3 }}
+              name="home"
+              color={focused ? Colors.tabIconFocused : Colors.tabIconDefault}
+            />
           ),
         }}
       />
@@ -20,19 +27,10 @@ export default function TabsLayout() {
         options={{
           tabBarLabel: "Гүйлгээ",
           title: "Гүйлгээ",
+          tabBarActiveTintColor: Colors.tabIconFocused,
           tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#16247d",
-                width: Platform.OS == "ios" ? 50 : 60,
-                height: Platform.OS == "ios" ? 50 : 60,
-                top: Platform.OS == "ios" ? -10 : -20,
-                borderRadius: Platform.OS == "ios" ? 25 : 30,
-              }}
-            >
-              <FontAwesome name="exchange" size={24} color="#fff" />
+            <View style={{ ...style.midbtn, backgroundColor: Colors.green }}>
+              <FontAwesome name="exchange" size={24} color={Colors.white} />
             </View>
           ),
         }}
@@ -42,11 +40,13 @@ export default function TabsLayout() {
         options={{
           tabBarLabel: "Нийт",
           title: "Нийт",
+          tabBarActiveTintColor: Colors.tabIconFocused,
           tabBarIcon: ({ focused }) => (
             <Foundation
               size={28}
               style={{ marginBottom: -3 }}
               name="graph-bar"
+              color={focused ? Colors.tabIconFocused : Colors.tabIconDefault}
             />
           ),
         }}
@@ -54,3 +54,14 @@ export default function TabsLayout() {
     </Tabs>
   );
 }
+
+const style = StyleSheet.create({
+  midbtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: Platform.OS == "ios" ? 50 : 60,
+    height: Platform.OS == "ios" ? 50 : 60,
+    top: Platform.OS == "ios" ? -10 : -20,
+    borderRadius: Platform.OS == "ios" ? 25 : 30,
+  },
+});

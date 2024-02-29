@@ -1,7 +1,7 @@
 import { Button, Spacer, TextInput } from "@/components/index";
 import { useSession } from "@/context/ctx";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import {
   SafeAreaView,
@@ -9,15 +9,19 @@ import {
 } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signIn, session } = useSession();
+  const { signUp, session } = useSession();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordAgain, setPasswordAgain] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntryAgain, setSecureTextEntryAgain] = useState(true);
 
   const handleSubmit = () => {
-    signIn();
+    signUp();
     if (session) {
       router.navigate("/(app)/(tabs)/home");
     }
@@ -32,7 +36,7 @@ const Page = () => {
         justifyContent: "space-between",
       }}
     >
-      <Text style={{ textAlign: "center", fontSize: 20 }}>Нэвтрэх</Text>
+      <Text style={{ textAlign: "center", fontSize: 20 }}>Бүртгүүлэх</Text>
       <ScrollView
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="never"
@@ -46,6 +50,20 @@ const Page = () => {
           height: "100%",
         }}
       >
+        <TextInput
+          type="text"
+          placeholder="Овог"
+          mode="outlined"
+          value={lname}
+          onChangeText={(value) => setLname(value)}
+        ></TextInput>
+        <TextInput
+          type="text"
+          placeholder="Нэр"
+          mode="outlined"
+          value={fname}
+          onChangeText={(value) => setFname(value)}
+        ></TextInput>
         <TextInput
           type="email"
           placeholder="Имэйл"
@@ -62,39 +80,16 @@ const Page = () => {
           onChangeText={(value) => setPassword(value)}
           onPress={() => setSecureTextEntry(!secureTextEntry)}
         ></TextInput>
-        <Button onPress={handleSubmit} label="Нэвтрэх" />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-              marginBottom: 15,
-            }}
-            onPress={() => {}}
-          >
-            Нууц үгээ мартсан
-          </Text>
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-              marginBottom: 15,
-            }}
-            onPress={() => {
-              router.navigate("/(sign-up)");
-            }}
-          >
-            Бүртгүүлэх
-          </Text>
-        </View>
+        <TextInput
+          type="pass"
+          secure={secureTextEntryAgain}
+          placeholder="Нууц үг давтах"
+          mode="outlined"
+          value={passwordAgain}
+          onChangeText={(value) => setPasswordAgain(value)}
+          onPress={() => setSecureTextEntryAgain(!secureTextEntryAgain)}
+        ></TextInput>
+        <Button onPress={handleSubmit} label="Бүртгүүлэх" />
       </ScrollView>
       <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
         <Text

@@ -1,11 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "react-native";
-import { InEx } from "@/components";
+import { SignupScreen } from "@/screens";
 
 export default function Index() {
   return (
     <SafeAreaView>
-      <InEx type="in" value={1000} />
+      <SignupScreen />
     </SafeAreaView>
   );
 }

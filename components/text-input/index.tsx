@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 
 export type Props = {
-  type: "pass" | "email" | "phone";
+  type?: "pass" | "email" | "phone" | "text";
   secure?: boolean;
   value: string;
   placeholder: string;
@@ -14,7 +14,7 @@ export type Props = {
 };
 
 const Index: React.FC<Props> = ({
-  type,
+  type = "text",
   secure = false,
   value,
   placeholder,
@@ -34,6 +34,8 @@ const Index: React.FC<Props> = ({
     return (
       <TextInput
         secureTextEntry={secure}
+        activeOutlineColor="#1D1C1A"
+        textColor="#000"
         keyboardType={_keyboardType}
         style={style.input}
         label={placeholder}
@@ -45,8 +47,43 @@ const Index: React.FC<Props> = ({
     );
   }
 
+  if (type === "email") {
+    return (
+      <TextInput
+        activeOutlineColor="#1D1C1A"
+        textColor="#000"
+        secureTextEntry={secure}
+        keyboardType={_keyboardType}
+        style={style.input}
+        label={placeholder}
+        value={value}
+        mode={mode}
+        onChangeText={onChangeText}
+      />
+    );
+  } else if (type === "pass") {
+    return (
+      <TextInput
+        secureTextEntry={secure}
+        activeOutlineColor="#1D1C1A"
+        textColor="#000"
+        keyboardType={_keyboardType}
+        style={style.input}
+        label={placeholder}
+        value={value}
+        mode={mode}
+        right={
+          <TextInput.Icon icon={secure ? "eye" : "eye-off"} onPress={onPress} />
+        }
+        onChangeText={onChangeText}
+      />
+    );
+  }
+
   return (
     <TextInput
+      activeOutlineColor="#1D1C1A"
+      textColor="#000"
       secureTextEntry={secure}
       keyboardType={_keyboardType}
       style={style.input}
@@ -64,7 +101,7 @@ const style = StyleSheet.create({
     backgroundColor: "white",
     color: "black",
     minWidth: "80%",
-    marginBottom: 10,
+    marginBottom: 8,
   },
 });
 

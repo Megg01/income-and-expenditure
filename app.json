@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "income-and-expenditure",
-    "slug": "income-and-expenditure",
+    "slug": "trmo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mega01.trmo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mega01.trmo"
     },
     "web": {
       "bundler": "metro",
@@ -40,6 +42,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0969a75e-74f9-4d87-a7ff-7a3f65ab956a"
+      }
+    },
+    "owner": "mega01"
   }
 }

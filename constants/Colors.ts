@@ -1,19 +1,21 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
-
-export default {
-  light: {
+import { Platform } from "react-native";
+const Colors = {
+    green: "#254745",
+    white: "#FAF8F6",
     text: '#000',
     background: '#fff',
-    tint: tintColorLight,
     tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
-  },
+    tabIconFocused: "#000",
+    tabMidBtn: {
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#254745",
+      width: Platform.OS == "ios" ? 50 : 60,
+      height: Platform.OS == "ios" ? 50 : 60,
+      top: Platform.OS == "ios" ? -10 : -20,
+      borderRadius: Platform.OS == "ios" ? 25 : 30,
+    }
 };
+
+
+export default Colors;
