@@ -7,7 +7,9 @@ type Props = {
 
 const Index: React.FC<Props> = ({ value, type }) => {
   return (
-    <View style={type === "in" ? style.income : style.expense}>
+    <View
+      style={[style.container, type === "in" ? style.income : style.expense]}
+    >
       <Text>{value}</Text>
     </View>
   );
@@ -18,6 +20,12 @@ const style = StyleSheet.create({
     backgroundColor: "#00A86B",
   },
   expense: {},
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    width: "40%",
+    borderRadius: 10,
+  },
 });
 
 export default memo(Index);

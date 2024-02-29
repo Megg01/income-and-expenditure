@@ -1,16 +1,12 @@
-import { Button, Spacer, TextInput } from "@/components/index";
+import { Button, TextInput } from "@/components/index";
 import { useSession } from "@/context/ctx";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useState } from "react";
+import { View, Text, ScrollView, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
   const { signIn, session } = useSession();
-  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -96,7 +92,13 @@ const Page = () => {
           </Text>
         </View>
       </ScrollView>
-      <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
+      <View
+        style={{
+          position: "absolute",
+          bottom: Platform.OS === "ios" ? 0 : 10,
+          width: "100%",
+        }}
+      >
         <Text
           style={{
             textAlign: "center",

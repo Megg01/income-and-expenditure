@@ -1,16 +1,12 @@
-import { Button, Spacer, TextInput } from "@/components/index";
+import { Button, TextInput } from "@/components/index";
 import { useSession } from "@/context/ctx";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { View, Text, ScrollView, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
   const { signUp, session } = useSession();
-  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -91,7 +87,13 @@ const Page = () => {
         ></TextInput>
         <Button onPress={handleSubmit} label="Бүртгүүлэх" />
       </ScrollView>
-      <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
+      <View
+        style={{
+          position: "absolute",
+          bottom: Platform.OS === "ios" ? 0 : 10,
+          width: "100%",
+        }}
+      >
         <Text
           style={{
             textAlign: "center",
