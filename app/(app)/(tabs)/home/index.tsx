@@ -5,7 +5,7 @@ import { InEx } from "@/components";
 export default function Index() {
   return (
     <SafeAreaView>
-      <InEx type="in" value={1000} />
+      <InEx type="in" value={1000000} />
     </SafeAreaView>
   );
 }
