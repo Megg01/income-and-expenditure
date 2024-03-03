@@ -1,11 +1,31 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "react-native";
-import { InEx } from "@/components";
+import { View } from "react-native";
+import { Balance, InEx, Spend } from "@/components";
 
 export default function Index() {
   return (
     <SafeAreaView>
-      <InEx type="in" value={1000000} />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Balance value={250400} />
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: 5,
+          }}
+        >
+          <InEx type="in" value={10000000} />
+          <InEx type="ex" value={10000000} />
+        </View>
+      </View>
+      <Spend />
     </SafeAreaView>
   );
 }

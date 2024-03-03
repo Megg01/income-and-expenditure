@@ -10,9 +10,16 @@ type Props = {
 const Index: React.FC<Props> = ({ value, type }) => {
   return (
     <View
-      style={[style.container, type === "in" ? style.income : style.expense]}
+      style={[type === "in" ? style.income : style.expense, style.container]}
     >
-      <View style={{ backgroundColor: "#FFF", padding: 12, borderRadius: 15 }}>
+      <View
+        style={{
+          backgroundColor: "#FFF",
+          paddingVertical: 10,
+          paddingHorizontal: 13,
+          borderRadius: 15,
+        }}
+      >
         <FontAwesome size={28} name="money" />
       </View>
       <View
@@ -20,7 +27,7 @@ const Index: React.FC<Props> = ({ value, type }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          paddingHorizontal: 5,
+          columnGap: 5,
         }}
       >
         <Text style={style.text}>{type === "in" ? "Орлого" : "Зарлага"}</Text>
@@ -34,19 +41,23 @@ const style = StyleSheet.create({
   income: {
     backgroundColor: "#00A86B",
   },
-  expense: {},
+  expense: {
+    backgroundColor: "#FF6961",
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    paddingHorizontal: 18,
     paddingVertical: 20,
-    width: "50%",
-    borderRadius: 18,
+    maxWidth: "50%",
+    borderRadius: 22,
   },
   text: {
+    paddingHorizontal: 5,
     color: "white",
-    fontSize: 17,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

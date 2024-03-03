@@ -30,7 +30,7 @@ export default function TabsLayout() {
           tabBarActiveTintColor: Colors.tabIconFocused,
           tabBarIcon: ({ focused }) => (
             <View style={{ ...style.midbtn, backgroundColor: Colors.green }}>
-              <FontAwesome name="exchange" size={24} color={Colors.white} />
+              <FontAwesome name="plus" size={28} color={Colors.white} />
             </View>
           ),
         }}
