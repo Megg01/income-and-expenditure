@@ -1,16 +1,22 @@
 import React from "react";
 import { useStorageState } from "./useStorageState";
+import axios from "axios";
 
 const AuthContext = React.createContext<{
-  signIn: () => void;
-  signUp: () => void;
+  signIn: (email: string, password: string) => boolean;
+  signUp: (
+    fname: string,
+    lname: string,
+    email: string,
+    password: string
+  ) => void;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
 }>({
-  signIn: () => null,
-  signUp: () => null,
-  signOut: () => null,
+  signIn: () => false,
+  signUp: () => false,
+  signOut: () => false,
   session: null,
   isLoading: false,
 });
@@ -33,9 +39,21 @@ export function SessionProvider(props: React.PropsWithChildren) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => {
-          // Perform sign-in logic here
-          setSession("xxx");
+        signIn: (email, password) => {
+          axios({
+            method: "get",
+            url: "http://localhost:5000/api/users/login",
+            data: {
+              email: email,
+              password: password,
+            },
+          }).then((response) => {
+            if (response.status === 200) {
+              setSession("xxx");
+              return true;
+            }
+          });
+          return false;
         },
         signUp: () => {
           setSession("xxx");

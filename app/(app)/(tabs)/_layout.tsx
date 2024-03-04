@@ -23,7 +23,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="trans"
+        name="middle"
         options={{
           tabBarLabel: "Гүйлгээ",
           title: "Гүйлгээ",

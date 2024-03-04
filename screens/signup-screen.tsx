@@ -17,7 +17,7 @@ const Page = () => {
   const [secureTextEntryAgain, setSecureTextEntryAgain] = useState(true);
 
   const handleSubmit = () => {
-    signUp();
+    signUp(fname, lname, email, password);
     if (session) {
       router.navigate("/(app)/(tabs)/home");
     }

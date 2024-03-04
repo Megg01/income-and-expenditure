@@ -13,7 +13,7 @@ const Page = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const handleSubmit = () => {
-    signIn();
+    signIn(email, password);
     if (session) {
       router.navigate("/(app)/(tabs)/home");
     }

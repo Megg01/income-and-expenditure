@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
-import { Balance, InEx, Spend } from "@/components";
+import { Balance, InEx, RecentTrans, Spend } from "@/components";
 
 export default function Index() {
   return (
@@ -10,6 +10,7 @@ export default function Index() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          paddingHorizontal: 10,
         }}
       >
         <Balance value={250400} />
@@ -26,6 +27,7 @@ export default function Index() {
         </View>
       </View>
       <Spend />
+      <RecentTrans />
     </SafeAreaView>
   );
 }
