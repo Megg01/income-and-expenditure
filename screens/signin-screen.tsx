@@ -1,20 +1,23 @@
 import { Button, TextInput } from "@/components/index";
-import { useSession } from "@/context/ctx";
+import Colors from "@/constants/Colors";
+import { useToken } from "@/context/ctx";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, ScrollView, Platform } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signIn, session } = useSession();
+  const { signIn, token, isLoading } = useToken();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const handleSubmit = () => {
-    signIn(email, password);
-    if (session) {
+  const handleSubmit = async () => {
+    const isSign = await signIn(email, password);
+    console.log("🚀 ~ TokenProvider ~ token:", token);
+    if (isSign) {
       router.navigate("/(app)/(tabs)/home");
     }
   };
@@ -91,6 +94,13 @@ const Page = () => {
             Бүртгүүлэх
           </Text>
         </View>
+        <ActivityIndicator
+          animating={isLoading}
+          color={Colors.green}
+          style={{
+            position: "absolute",
+          }}
+        />
       </ScrollView>
       <View
         style={{

@@ -23,8 +23,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="middle"
+        name="trans"
         options={{
+          header: () => <View />,
           tabBarLabel: "Гүйлгээ",
           title: "Гүйлгээ",
           tabBarActiveTintColor: Colors.tabIconFocused,

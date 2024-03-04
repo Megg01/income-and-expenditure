@@ -5,6 +5,7 @@ import ButtonOpacity from "./button-opacity";
 import Spacer from "./spacer";
 import AppBar from "./appbar";
 import InEx from "./inex";
+import InExTr from "./inextr";
 import Balance from "./balance";
 import Spend from "./spend";
 import RecentTrans from "./recent-trans";
@@ -16,6 +17,7 @@ export {
   Spacer,
   AppBar,
   InEx,
+  InExTr,
   Balance,
   Spend,
   RecentTrans,

@@ -16,7 +16,7 @@ const Index: React.FC = () => {
       >
         <Text style={style.text}>Сүүлийн гүйлгээ</Text>
         <ButtonOpacity
-          onPress={() => router.navigate("/login")}
+          onPress={() => router.navigate("/(sign-in)")}
           label="Бүгдийг харах"
         />
       </View>

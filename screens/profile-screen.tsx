@@ -1,23 +1,13 @@
 import { Button, Spacer, TextInput } from "@/components/index";
-import { useSession } from "@/context/ctx";
+import { useToken } from "@/context/ctx";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signIn, signOut, session } = useSession();
+  const { signOut } = useToken();
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-
-  const handleSubmit = () => {
-    signIn();
-    if (session) {
-      router.navigate("/(app)");
-    }
-  };
 
   return (
     <SafeAreaView>
