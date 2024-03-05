@@ -2,6 +2,8 @@ import React from "react";
 import { useStorageState } from "./useStorageState";
 import axios from "axios";
 
+const API = "http://10.150.10.70:5000/api";
+
 const AuthContext = React.createContext<{
   signIn: (email: string, password: string) => Promise<boolean>;
   signUp: (
@@ -36,13 +38,9 @@ export function TokenProvider(props: React.PropsWithChildren<any>) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const response = await axios({
-        method: "post",
-        url: "http://192.168.1.3:5000/api/users/login",
-        data: {
-          email: email,
-          password: password,
-        },
+      const response = await axios.post(API + "/users/login", {
+        email: email,
+        password: password,
       });
 
       if (response?.data?.success && response?.status == 200) {
@@ -63,19 +61,14 @@ export function TokenProvider(props: React.PropsWithChildren<any>) {
     password: string
   ) => {
     try {
-      const response = await axios({
-        method: "post",
-        url: "http://localhost:5000/api/users/signup",
-        data: {
-          fname: fname,
-          lname: lname,
-          email: email,
-          password: password,
-        },
+      const response = await axios.post(API + "/users/signup", {
+        fname: fname,
+        lname: lname,
+        email: email,
+        password: password,
       });
 
-      if (response.status === 200) {
-        setToken("xxx");
+      if (response?.data?.success && response.status === 200) {
         return true;
       }
       return false;
