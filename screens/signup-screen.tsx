@@ -1,12 +1,12 @@
 import { Button, TextInput } from "@/components/index";
-import { useSession } from "@/context/ctx";
+import { useToken } from "@/context/ctx";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signUp, session } = useSession();
+  const { signUp, token } = useToken();
   const router = useRouter();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -18,7 +18,7 @@ const Page = () => {
 
   const handleSubmit = () => {
     signUp(fname, lname, email, password);
-    if (session) {
+    if (token) {
       router.navigate("/(app)/(tabs)/home");
     }
   };
@@ -108,3 +108,110 @@ const Page = () => {
 };
 
 export default Page;
+
+// import React, { useState } from 'react';
+// import { View, Text, StyleSheet } from 'react-native';
+// import { TextInput, Button } from 'react-native-paper';
+
+// const SignUpForm = () => {
+//   const [name, setName] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   const handleSignUp = () => {
+//     // Handle sign-up logic here
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Sign Up</Text>
+//       <TextInput
+//         label="Name"
+//         value={name}
+//         onChangeText={text => setName(text)}
+//         style={styles.input}
+//       />
+//       <TextInput
+//         label="Email"
+//         value={email}
+//         onChangeText={text => setEmail(text)}
+//         style={styles.input}
+//       />
+//       <TextInput
+//         label="Password"
+//         value={password}
+//         onChangeText={text => setPassword(text)}
+//         secureTextEntry
+//         style={styles.input}
+//       />
+//       <TextInput
+//         label="Password"
+//         value={password}
+//         onChangeText={text => setPassword(text)}
+//         secureTextEntry
+//         style={styles.input}
+//       />
+//       <TextInput
+//         label="Password"
+//         value={password}
+//         onChangeText={text => setPassword(text)}
+//         secureTextEntry
+//         style={styles.input}
+//       />
+//       <TextInput
+//         label="Password"
+//         value={password}
+//         onChangeText={text => setPassword(text)}
+//         secureTextEntry
+//         style={styles.input}
+//       />
+//       <Button mode="contained" onPress={handleSignUp} style={styles.button}>
+//         Sign Up
+//       </Button>
+//       <Text style={styles.orText}>Or</Text>
+//       <Button mode="outlined" style={styles.googleButton}>
+//         Sign Up with Google
+//       </Button>
+//       <Text style={styles.bottomText}>
+//         By signing up, you agree to the Terms of Service and Privacy Policy
+//       </Text>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     // flex: 1,
+//     display: "flex",
+//     height: "100%",
+//     flexDirection: "column",
+//     justifyContent: "space-evenly",
+//     backgroundColor: '#fff',
+//   },
+//   title: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//     textAlign: 'center',
+//   },
+//   input: {
+//     marginBottom: 10,
+//   },
+//   button: {
+//     marginBottom: 10,
+//   },
+//   orText: {
+//     textAlign: 'center',
+//     marginVertical: 10,
+//     fontWeight: 'bold',
+//   },
+//   googleButton: {
+//     marginBottom: 20,
+//   },
+//   bottomText: {
+//     textAlign: 'center',
+//   },
+// });
+
+// export default SignUpForm;

@@ -37,7 +37,7 @@ const Index: React.FC<Props> = ({
 
 const style = StyleSheet.create({
   button: {
-    borderRadius: 4,
+    borderRadius: 15,
     minWidth: "80%",
     marginTop: 10,
     marginBottom: 10,
