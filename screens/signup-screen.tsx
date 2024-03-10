@@ -1,5 +1,5 @@
 import { Button, TextInput } from "@/components/index";
-import { useToken } from "@/context/ctx";
+import { useToken } from "@/context/authContext";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, ScrollView, Platform } from "react-native";

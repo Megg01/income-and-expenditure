@@ -1,6 +1,6 @@
 import { Button, TextInput } from "@/components/index";
 import Colors from "@/constants/Colors";
-import { useToken } from "@/context/ctx";
+import { useToken } from "@/context/authContext";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Text, ScrollView, Platform } from "react-native";
@@ -16,7 +16,6 @@ const Page = () => {
 
   const handleSubmit = async () => {
     const isSign = await signIn(email, password);
-    console.log("🚀 ~ TokenProvider ~ token:", token);
     if (isSign) {
       router.navigate("/(app)/(tabs)/home");
     }
@@ -95,7 +94,7 @@ const Page = () => {
           </Text>
         </View>
         <ActivityIndicator
-          animating={isLoading}
+          animating={token === ""}
           color={Colors.green}
           style={{
             position: "absolute",

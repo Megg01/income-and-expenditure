@@ -1,12 +1,12 @@
 import { Button, Spacer, TextInput } from "@/components/index";
-import { useToken } from "@/context/ctx";
+import { useToken } from "@/context/authContext";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signOut } = useToken();
+  const { signOut, token } = useToken();
   const router = useRouter();
 
   return (
@@ -31,6 +31,7 @@ const Page = () => {
           <Text
             onPress={() => {
               signOut();
+              console.log("🚀 ~ Page ~ token:", token);
               router.navigate("/(sign-in)");
             }}
           >

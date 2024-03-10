@@ -2,7 +2,7 @@ import React from "react";
 import { useStorageState } from "./useStorageState";
 import axios from "axios";
 
-const API = "http://10.150.10.70:5000/api";
+const API = "http://192.168.1.3:5000/api";
 
 const AuthContext = React.createContext<{
   signIn: (email: string, password: string) => Promise<boolean>;
@@ -19,7 +19,7 @@ const AuthContext = React.createContext<{
   signIn: async () => false,
   signUp: async () => false,
   signOut: () => {},
-  token: null,
+  token: "",
   isLoading: false,
 });
 
@@ -38,12 +38,13 @@ export function TokenProvider(props: React.PropsWithChildren<any>) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const response = await axios.post(API + "/users/login", {
+      const response = await axios.post(API + "/auth/login", {
         email: email,
         password: password,
       });
 
       if (response?.data?.success && response?.status == 200) {
+        console.log("🚀 ~ signIn ~ response:", response?.data?.token);
         setToken(response?.data?.token);
         return true;
       }
@@ -61,7 +62,7 @@ export function TokenProvider(props: React.PropsWithChildren<any>) {
     password: string
   ) => {
     try {
-      const response = await axios.post(API + "/users/signup", {
+      const response = await axios.post(API + "/auth/signup", {
         fname: fname,
         lname: lname,
         email: email,
@@ -79,7 +80,7 @@ export function TokenProvider(props: React.PropsWithChildren<any>) {
   };
 
   const signOut = () => {
-    setToken(null);
+    setToken("");
   };
 
   return (

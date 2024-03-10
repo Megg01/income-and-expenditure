@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { TokenProvider } from "@/context/ctx";
+import { TokenProvider, useToken } from "@/context/authContext";
 import { PaperProvider } from "react-native-paper";
 
 export { ErrorBoundary } from "expo-router";
@@ -21,6 +21,12 @@ export default function RootLayout() {
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+
+  const { token } = useToken();
+
+  useEffect(() => {
+    console.log("🚀 ~ RootLayout ~ token:", token);
+  }, [token]);
 
   useEffect(() => {
     if (loaded) {
