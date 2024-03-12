@@ -13,30 +13,11 @@ const API = "http://192.168.1.3:5000/api";
 interface AuthContextInterface {
   token: string | null;
   isAuthenticated: boolean;
-  // setIsAuthenticated(): Promise<void>;
-  // setToken(): Promise<void>;
   login(email: string, password: string): Promise<boolean>;
   logout(): Promise<boolean>;
 }
 
-// const AuthContext = createContext<{
-//   token: string | null;
-//   isAuthenticated: boolean;
-//   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
-//   setToken: Dispatch<SetStateAction<string | null>>;
-//   login: (email: string, password: string) => Promise<boolean>;
-//   logout: () => Promise<boolean>;
-// }>({
-//   token: null,
-//   isAuthenticated: false,
-//   setIsAuthenticated: () => {},
-//   setToken: () => {},
-//   login: async () => false,
-//   logout: async () => false,
-// });
-const AuthContext = createContext<AuthContextInterface>(
-  {} as AuthContextInterface
-);
+const AuthContext = createContext<AuthContextInterface>({} as AuthContextInterface);
 
 const AuthProvider = (props: React.PropsWithChildren<any>) => {
   const [token, setToken] = useState<string | null>(null);
@@ -44,10 +25,8 @@ const AuthProvider = (props: React.PropsWithChildren<any>) => {
 
   const loadToken = async () => {
     const storedToken = await SecureStore.getItemAsync("token");
-    // setToken(storedToken ?? null);
-    setToken(() => storedToken);
-
-    setIsAuthenticated(() => !!storedToken);
+    setToken(storedToken);
+    setIsAuthenticated(!!storedToken);
   };
 
   useEffect(() => {
@@ -63,7 +42,7 @@ const AuthProvider = (props: React.PropsWithChildren<any>) => {
     if (response?.data?.success && response?.status === 200) {
       const token1 = response?.data?.token;
       await SecureStore.setItemAsync("token", token1);
-      console.log("🚀 ~ login ~ token1:", token1);
+      console.log(" ~ login ~ token1:", token1);
       setToken(token1);
       setIsAuthenticated(true);
       return true;
@@ -85,13 +64,11 @@ const AuthProvider = (props: React.PropsWithChildren<any>) => {
       value={{
         token,
         isAuthenticated,
-        // setIsAuthenticated,
-        // setToken,
         login,
         logout,
       }}
     >
-      {props?.children}
+      {props.children}
     </AuthContext.Provider>
   );
 };

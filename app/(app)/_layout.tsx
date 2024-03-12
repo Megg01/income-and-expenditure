@@ -4,8 +4,9 @@ import { Drawer } from "expo-router/drawer";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "@/context/authContext";
+import fetchRequest from "@/utils/customRequest";
 
 const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
   return (
@@ -67,6 +68,13 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
 
 export default function AppLayout() {
   const { isAuthenticated, logout, token } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchRequest({ url: "users" }).then((res) => {
+      console.log("🚀 ~ useEffect ~ res:", res);
+      return;
+    });
+  }, []);
 
   const handlePress = async () => {
     const isSuccess = await logout();
