@@ -1,9 +1,9 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { TokenProvider, useToken } from "@/context/authContext";
+import { useContext, useEffect } from "react";
+import { AuthProvider, AuthContext } from "@/context/authContext";
 import { PaperProvider } from "react-native-paper";
 
 export { ErrorBoundary } from "expo-router";
@@ -22,11 +22,11 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
-  const { token } = useToken();
+  // const context = useContext(AuthContext);
 
-  useEffect(() => {
-    console.log("🚀 ~ RootLayout ~ token:", token);
-  }, [token]);
+  // useEffect(() => {
+  //   console.log("🚀 ~ RootLayout ~ context?.token:", context?.token);
+  // }, [context?.token]);
 
   useEffect(() => {
     if (loaded) {
@@ -39,11 +39,11 @@ export default function RootLayout() {
   }
 
   return (
-    <TokenProvider>
+    <AuthProvider>
       <PaperProvider>
         <RootLayoutNav />
       </PaperProvider>
-    </TokenProvider>
+    </AuthProvider>
   );
 }
 

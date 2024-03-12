@@ -1,13 +1,20 @@
 import { Button, Spacer, TextInput } from "@/components/index";
-import { useToken } from "@/context/authContext";
+import { AuthContext } from "@/context/authContext";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signOut, token } = useToken();
+  const { logout, token } = useContext(AuthContext);
   const router = useRouter();
+
+  const handlePress = async () => {
+    const isSuccess = await logout();
+    if (isSuccess) {
+      router.navigate("/(sign-in)");
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -28,15 +35,7 @@ const Page = () => {
             alignItems: "center",
           }}
         >
-          <Text
-            onPress={() => {
-              signOut();
-              console.log("🚀 ~ Page ~ token:", token);
-              router.navigate("/(sign-in)");
-            }}
-          >
-            Гарах
-          </Text>
+          <Text onPress={handlePress}>Гарах</Text>
         </View>
       </View>
     </SafeAreaView>

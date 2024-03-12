@@ -4,8 +4,10 @@ import { Drawer } from "expo-router/drawer";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useContext } from "react";
+import { AuthContext } from "@/context/authContext";
 
-const CustomDrawerContent = () => {
+const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
   return (
     <DrawerContentScrollView
       contentContainerStyle={{
@@ -57,19 +59,25 @@ const CustomDrawerContent = () => {
             color={color}
           />
         )}
-        onPress={() => {
-          router.navigate("/(sign-in)");
-        }}
+        onPress={handlePress}
       ></DrawerItem>
     </DrawerContentScrollView>
   );
 };
 
 export default function AppLayout() {
+  const { isAuthenticated, logout, token } = useContext(AuthContext);
+
+  const handlePress = async () => {
+    const isSuccess = await logout();
+    if (isSuccess) {
+      router.navigate("/(sign-in)");
+    }
+  };
   return (
     <Drawer
       screenOptions={{ header: () => <AppBar /> }}
-      drawerContent={() => <CustomDrawerContent />}
+      drawerContent={() => <CustomDrawerContent handlePress={handlePress} />}
     >
       <Drawer.Screen name="(profile)" options={{ headerShown: true }} />
     </Drawer>
