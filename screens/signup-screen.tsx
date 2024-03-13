@@ -1,12 +1,12 @@
 import { Button, TextInput } from "@/components/index";
-import { useToken } from "@/context/authContext";
+import { AuthContext } from "@/context/authContext";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { signUp, token } = useToken();
+  const { signup, token } = useContext(AuthContext);
   const router = useRouter();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");

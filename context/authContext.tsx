@@ -8,7 +8,8 @@ import React, {
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
-const API = "http://192.168.1.3:5000/api";
+// const API = "http://192.168.1.3:5000/api";
+const API = "http://10.150.10.70:5000/api";
 
 interface AuthContextInterface {
   token: string | null;
