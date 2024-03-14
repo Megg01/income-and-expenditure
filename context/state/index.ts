@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import * as Native from "react-native";
-import { showMessage } from "react-native-flash-message";
+import { MessageType, showMessage } from "react-native-flash-message";
 
 import { appReducer } from "../";
 import { API, initial } from "../../config";
@@ -15,7 +15,7 @@ export const GlobalContext = createContext(initial);
 interface RequestInterface {
   url: string;
   model: string;
-  body:any;
+  body?:any;
   method? : "POST" | "PUT" | "DELETE" | "GET" | "PATCH";
   isfiles: boolean;
   clear: boolean;
@@ -36,14 +36,14 @@ export const GlobalProvider = (props: React.PropsWithChildren) => {
   };
 
   const request = async ({
-    url,
-    model,
-    body,
+    url = "",
+    model = "",
+    body = {},
     method = "GET",
     isfiles = false,
     clear = false,
     ismessage = false,
-    accesstoken,
+    accesstoken = "",
   }:RequestInterface) => {
     addmodel({ model: model || url });
     return fetchRequest({
@@ -51,12 +51,13 @@ export const GlobalProvider = (props: React.PropsWithChildren) => {
       clear,
       method,
       isfiles,
+      ismessage,
       url: API + url,
       dispatchEvent: dispatch,
       model: models[model || url],
       accesstoken: state.resaccesstoken || accesstoken,
-    }).then((res) => {
-      if (ismessage === "noshow") {
+    }).then((res: any) => {
+      if (!ismessage) {
         return res;
       }
 
@@ -85,13 +86,13 @@ export const GlobalProvider = (props: React.PropsWithChildren) => {
   const setModel = ({ model, res }:any) =>
     dispatch({ type: "setmodel", model: model, response: res });
 
-  const notification = ({ type, message, code, data }) => {
+  const notification = ({ type, message, code, data }:{type: MessageType, message: string, code: string, data: any}) => {
     return showMessage({
-      icon: type,
+      type: type,
       message: message,
       backgroundColor: "#fff",
-      code,
-      data,
+      // code,
+      // data,
     });
   };
 
@@ -113,6 +114,8 @@ export const GlobalProvider = (props: React.PropsWithChildren) => {
         clearContext,
         HomeWidgetRef: React.useRef(),
       }}
-    >{props?.children}</GlobalContext.Provider>
+    >
+    {props?.children}
+    </GlobalContext.Provider>
   );
 };

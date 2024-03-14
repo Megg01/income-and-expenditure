@@ -1,27 +1,21 @@
 import axios from "axios";
+import React from "react";
 
 const API = "http://192.168.1.3:5000/api/";
 
 interface RequestInterface {
-  method?: string;
   url: string;
-  body?: object;
-  accesstoken: string;
-  isfiles?: boolean;
-}
-interface FetchRequestInterface {
-  url: string;
+  body?: any;
   model: any;
-  body: any;
   method?: "POST" | "PUT" | "DELETE" | "GET" | "PATCH";
-  isfiles: boolean;
-  clear: boolean;
-  ismessage: boolean;
+  isfiles?: boolean;
+  clear?: boolean;
+  ismessage?: boolean;
   accesstoken: string;
-  dispatchEvent: any;
+  dispatchEvent?: React.Dispatch<any>;
 }
 
-function request({ method = "GET", url, body, accesstoken }: RequestInterface) {
+function request({ method = "GET", url, body, accesstoken, isfiles = false, ismessage = false, clear = false, model }: RequestInterface) {
   const headers = {
     Authorization: `Bearer ${accesstoken}`,
     Accept: "application/json, text/plain, */*",
@@ -29,18 +23,11 @@ function request({ method = "GET", url, body, accesstoken }: RequestInterface) {
     "Access-Control-Allow-Headers": "*",
   };
 
-  if (body) {
-    return axios.request({
-      headers,
-      method,
-      url: API + url,
-      data: body,
-    });
-  }
   return axios.request({
     headers,
     method,
     url: API + url,
+    data: body,
   });
 }
 
@@ -49,33 +36,34 @@ function fetchRequest({
   body,
   clear,
   model,
+  ismessage,
   method,
   isfiles,
   accesstoken,
   dispatchEvent,
-}: FetchRequestInterface) {
+}: RequestInterface) {
   try {
-    dispatchEvent({ type: model.request, clear });
+    dispatchEvent?.({ type: "request", clear });
     return request({
       url,
       method,
       body,
       isfiles,
+      ismessage,
+      clear,
       accesstoken,
+      model,
     }).then((res) => {
       res?.status === 200 &&
-        dispatchEvent({
-          clear,
-          response: res,
-          type: model?.response,
-        });
-      !(res.status === 200) &&
-        dispatchEvent({ type: model.error, response: res });
-      // !res.success && console.log(url, method, body, res);
+        dispatchEvent?.({ clear, response: res, type: "response" });
+      !(res?.status === 200) &&
+        dispatchEvent?.({ type: "error", response: res });
 
       return res;
     });
   } catch (error) {
+    console.error("Error fetching data:", error);
+    dispatchEvent?.({ type: "error", message: error });
     return error;
   }
 }
