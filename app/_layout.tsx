@@ -1,14 +1,34 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Slot, Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useContext, useEffect } from "react";
-import { AuthProvider, AuthContext } from "@/context/authContext";
+import React, { useContext, useEffect } from "react";
+// import { AuthProvider, AuthContext } from "@/context/authContext";
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
+import { SigninScreen, SignupScreen } from "@/screens";
 
 export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
+
+const InitialLayout = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    const inTabsGroup = segments[0] === "(auth)";
+    if (isSignedIn && !inTabsGroup) {
+      router.replace("/(app)/(tabs)/home");
+    } else if (!isSignedIn) {
+      router.replace("/(sign-in)");
+    }
+  }, [isSignedIn]);
+
+  return <Slot />;
+};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -22,12 +42,6 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
-  // const context = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   console.log("🚀 ~ RootLayout ~ context?.token:", context?.token);
-  // }, [context?.token]);
-
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -39,19 +53,12 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
+    <ClerkProvider
+      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    >
       <PaperProvider>
-        <RootLayoutNav />
+        <InitialLayout />
       </PaperProvider>
-    </AuthProvider>
-  );
-}
-
-function RootLayoutNav() {
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(sign-in)"></Stack.Screen>
-      <Stack.Screen name="(app)"></Stack.Screen>
-    </Stack>
+    </ClerkProvider>
   );
 }

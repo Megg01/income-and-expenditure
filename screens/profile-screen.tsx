@@ -1,19 +1,14 @@
 import { Button, Spacer, TextInput } from "@/components/index";
-import { AuthContext } from "@/context/authContext";
 import { useRouter } from "expo-router";
 import { useContext } from "react";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Page = () => {
-  const { logout, token } = useContext(AuthContext);
   const router = useRouter();
 
   const handlePress = async () => {
-    const isSuccess = await logout();
-    if (isSuccess) {
-      router.navigate("/(sign-in)");
-    }
+    router.navigate("/(sign-in)");
   };
 
   return (

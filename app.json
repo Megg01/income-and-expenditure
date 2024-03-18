@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mega01.trmo"
@@ -49,7 +47,8 @@
       },
       "eas": {
         "projectId": "0969a75e-74f9-4d87-a7ff-7a3f65ab956a"
-      }
+      },
+      "clerkPublishableKey": "pk_test_c29jaWFsLXBlcmNoLTk4LmNsZXJrLmFjY291bnRzLmRldiQ"
     },
     "owner": "mega01"
   }
