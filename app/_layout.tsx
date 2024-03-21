@@ -1,7 +1,11 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Redirect, Slot, Stack, useRouter, useSegments } from "expo-router";
+import { Redirect, Slot, Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import React, { useContext, useEffect } from "react";
+// import { AuthProvider, AuthContext } from "@/context/authContext";
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import React, { useContext, useEffect } from "react";
 // import { AuthProvider, AuthContext } from "@/context/authContext";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
@@ -13,6 +17,24 @@ import FlashMessage from "react-native-flash-message";
 export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
+
+const InitialLayout = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    const inTabsGroup = segments[0] === "(auth)";
+    if (isSignedIn && !inTabsGroup) {
+      router.replace("/(app)/(tabs)/home");
+    } else if (!isSignedIn) {
+      router.replace("/(sign-in)");
+    }
+  }, [isSignedIn]);
+
+  return <Slot />;
+};
 
 const InitialLayout = () => {
   const { isLoaded, isSignedIn } = useAuth();

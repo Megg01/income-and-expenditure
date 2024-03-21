@@ -22,8 +22,17 @@ const Page = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
+  const { isLoaded, signUp, setActive } = useSignUp();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+
+  const [pending, setPending] = useState(false);
+  const [code, setCode] = useState("");
+
 
   const [pending, setPending] = useState(false);
   const [code, setCode] = useState("");
@@ -31,6 +40,40 @@ const Page = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureTextEntryAgain, setSecureTextEntryAgain] = useState(true);
 
+  const onSignUpPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      await signUp.create({
+        firstName,
+        lastName,
+        emailAddress,
+        password,
+      });
+
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+      setPending(true);
+    } catch (error: any) {
+      console.log("🚀 ~ onSignUpPress ~ error:", error);
+    }
+  };
+
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      await setActive({ session: completeSignUp.createdSessionId });
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
