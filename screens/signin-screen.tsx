@@ -5,11 +5,7 @@ import { Link } from "expo-router";
 import React, { useState } from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import { ActivityIndicator } from "react-native-paper";
-
-const login = () => {
-  const { signIn, setActive, isLoaded } = useSignIn();
-
+import { SafeAreaView } from "react-native-safe-area-context";
 const login = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
 
