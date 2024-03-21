@@ -1,16 +1,11 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Redirect, Slot, Stack, useRouter, useSegments } from "expo-router";
-import { Redirect, Slot, Stack, useRouter, useSegments } from "expo-router";
+import { Slot, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useContext, useEffect } from "react";
-// import { AuthProvider, AuthContext } from "@/context/authContext";
-import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 // import { AuthProvider, AuthContext } from "@/context/authContext";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
-import { SigninScreen, SignupScreen } from "@/screens";
 import { GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
 
@@ -25,25 +20,7 @@ const InitialLayout = () => {
 
   useEffect(() => {
     if (!isLoaded) return;
-    const inTabsGroup = segments[0] === "(auth)";
-    if (isSignedIn && !inTabsGroup) {
-      router.replace("/(app)/(tabs)/home");
-    } else if (!isSignedIn) {
-      router.replace("/(sign-in)");
-    }
-  }, [isSignedIn]);
-
-  return <Slot />;
-};
-
-const InitialLayout = () => {
-  const { isLoaded, isSignedIn } = useAuth();
-  const segments = useSegments();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    const inTabsGroup = segments[0] === "(auth)";
+    const inTabsGroup = segments[0] === "(app)";
     if (isSignedIn && !inTabsGroup) {
       router.replace("/(app)/(tabs)/home");
     } else if (!isSignedIn) {
@@ -56,9 +33,7 @@ const InitialLayout = () => {
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    Roboto: require("../assets/fonts/Roboto-Regular.ttf"),
-    RobotoBold: require("../assets/fonts/Roboto-Bold.ttf"),
+    Commissioner: require("../assets/fonts/Commissioner-Regular.ttf"),
     ...FontAwesome.font,
   });
 

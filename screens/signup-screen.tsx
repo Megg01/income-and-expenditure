@@ -2,7 +2,7 @@ import { Button, TextInput } from "@/components";
 import Title from "@/components/title";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
-import { useContext, useState } from "react";
+import { memo, useState } from "react";
 import {
   View,
   Text,
@@ -11,18 +11,13 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { showMessage } from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Colors from "@/constants/Colors";
 
 const Page = () => {
   const router = useRouter();
-  const { isLoaded, signUp, setActive } = useSignUp();
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -31,170 +26,118 @@ const Page = () => {
   const [passwordAgain, setPasswordAgain] = useState("");
 
   const [pending, setPending] = useState(false);
-  const [code, setCode] = useState("");
-
-
-  const [pending, setPending] = useState(false);
-  const [code, setCode] = useState("");
-
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [secureTextEntryAgain, setSecureTextEntryAgain] = useState(true);
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
     }
 
-    try {
-      await signUp.create({
-        firstName,
-        lastName,
-        emailAddress,
-        password,
+    if (password !== passwordAgain) {
+      showMessage({
+        message: "Нууц үг хоорондоо таарахгүй байна.",
+        type: "warning",
       });
+      return;
+    }
+
+    try {
+      setPending(true);
+      await signUp
+        .create({
+          firstName,
+          lastName,
+          emailAddress,
+          password,
+        })
+        .catch((error) => {
+          showMessage({
+            message: error.errors[0].message,
+            type: "warning",
+          });
+          setPending(false);
+          return;
+        });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
 
-      setPending(true);
+      showMessage({
+        message: "Баталгаажуулах имейл илгээгдлээ.",
+        type: "success",
+      });
+
+      router.navigate("/(verify-email)");
     } catch (error: any) {
-      console.log("🚀 ~ onSignUpPress ~ error:", error);
-    }
-  };
-
-  const onPressVerify = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
+      showMessage({
+        message: error.errors[0].message,
+        type: "warning",
       });
-
-      await setActive({ session: completeSignUp.createdSessionId });
-    } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2));
-  const onSignUpPress = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
-    try {
-      await signUp.create({
-        firstName,
-        lastName,
-        emailAddress,
-        password,
-      });
-
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
-      setPending(true);
-    } catch (error: any) {
-      console.log("🚀 ~ onSignUpPress ~ error:", error);
-    }
-  };
-
-  const onPressVerify = async () => {
-    if (!isLoaded) {
-      return;
-    }
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-
-      await setActive({ session: completeSignUp.createdSessionId });
-    } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setPending(false);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Title>Бүртгүүлэх</Title>
-      {!pending && (
-        <ScrollView
-          automaticallyAdjustKeyboardInsets
-          keyboardShouldPersistTaps="never"
-          contentContainerStyle={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            marginTop: 50,
-            height: "100%",
-          }}
-        >
-          <TextInput
-            type="text"
-            placeholder="Овог"
-            mode="outlined"
-            value={lastName}
-            onChangeText={(value) => setLastName(value)}
-          ></TextInput>
-          <TextInput
-            type="text"
-            placeholder="Нэр"
-            mode="outlined"
-            value={firstName}
-            onChangeText={(value) => setFirstName(value)}
-          ></TextInput>
-          <TextInput
-            type="email"
-            placeholder="Имэйл"
-            mode="outlined"
-            value={emailAddress}
-            onChangeText={(value) => setEmailAddress(value)}
-          ></TextInput>
-          <TextInput
-            type="pass"
-            secure={secureTextEntry}
-            placeholder="Нууц үг"
-            mode="outlined"
-            value={password}
-            onChangeText={(value) => setPassword(value)}
-            onPress={() => setSecureTextEntry(!secureTextEntry)}
-          ></TextInput>
-          <TextInput
-            type="pass"
-            secure={secureTextEntryAgain}
-            placeholder="Нууц үг давтах"
-            mode="outlined"
-            value={passwordAgain}
-            onChangeText={(value) => setPasswordAgain(value)}
-            onPress={() => setSecureTextEntryAgain(!secureTextEntryAgain)}
-          ></TextInput>
-          <Button
-            onPress={onSignUpPress}
-            label="Бүртгүүлэх"
-            loading={pending}
-          />
 
-          <View style={styles.bottom}>
-            <Link href="/(sign-in)" asChild>
-              <Pressable style={styles.button}>
-                <Text>Нэвтрэх</Text>
-              </Pressable>
-            </Link>
-          </View>
-        </ScrollView>
-      )}
+      <ScrollView
+        automaticallyAdjustKeyboardInsets
+        keyboardShouldPersistTaps="never"
+        contentContainerStyle={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          marginTop: 50,
+          height: "100%",
+        }}
+      >
+        <TextInput
+          type="text"
+          placeholder="Овог"
+          mode="outlined"
+          value={lastName}
+          onChangeText={(value) => setLastName(value)}
+        ></TextInput>
+        <TextInput
+          type="text"
+          placeholder="Нэр"
+          mode="outlined"
+          value={firstName}
+          onChangeText={(value) => setFirstName(value)}
+        ></TextInput>
+        <TextInput
+          type="email"
+          placeholder="Имэйл"
+          mode="outlined"
+          value={emailAddress}
+          onChangeText={(value) => setEmailAddress(value)}
+        ></TextInput>
+        <TextInput
+          type="pass"
+          secure={true}
+          placeholder="Нууц үг"
+          mode="outlined"
+          value={password}
+          onChangeText={(value) => setPassword(value)}
+        ></TextInput>
+        <TextInput
+          type="pass"
+          secure={true}
+          placeholder="Нууц үг давтах"
+          mode="outlined"
+          value={passwordAgain}
+          onChangeText={(value) => setPasswordAgain(value)}
+        ></TextInput>
+        <Button onPress={onSignUpPress} label="Бүртгүүлэх" loading={pending} />
 
-      {pending && (
-        <View>
-          <View>
-            <TextInput
-              value={code}
-              placeholder="Code..."
-              onChangeText={(code) => setCode(code)}
-            />
-          </View>
-          <TouchableOpacity onPress={onPressVerify}>
-            <Text>Verify Email</Text>
-          </TouchableOpacity>
+        <View style={styles.bottom}>
+          <Link href="/(sign-in)" asChild>
+            <Pressable style={styles.button}>
+              <Text>Нэвтрэх</Text>
+            </Pressable>
+          </Link>
         </View>
-      )}
+      </ScrollView>
 
       <View style={styles.policy}>
         <Text
@@ -210,7 +153,7 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default memo(Page);
 
 const styles = StyleSheet.create({
   container: {

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 
 export type Props = {
-  type?: "pass" | "email" | "phone" | "text";
+  type?: "pass" | "email" | "phone" | "text" | "numeric";
   secure?: boolean;
   value: string;
   placeholder: string;
@@ -11,6 +11,7 @@ export type Props = {
   onPress?: (() => void) | undefined;
   mode?: "flat" | "outlined";
   rIcon?: string;
+  numberOfLines?: number;
 };
 
 const Index: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const Index: React.FC<Props> = ({
   onPress,
   mode = "flat",
   rIcon,
+  numberOfLines,
 }) => {
   const _keyboardType =
     type === "email"
@@ -40,6 +42,7 @@ const Index: React.FC<Props> = ({
         style={style.input}
         label={placeholder}
         value={value}
+        numberOfLines={numberOfLines}
         mode={mode}
         right={<TextInput.Icon icon={rIcon} onPress={onPress} />}
         onChangeText={onChangeText}
@@ -47,35 +50,37 @@ const Index: React.FC<Props> = ({
     );
   }
 
-  if (type === "email") {
-    return (
-      <TextInput
-        activeOutlineColor="#1D1C1A"
-        textColor="#000"
-        secureTextEntry={secure}
-        keyboardType={_keyboardType}
-        style={style.input}
-        label={placeholder}
-        value={value}
-        mode={mode}
-        onChangeText={onChangeText}
-      />
-    );
-  } else if (type === "pass") {
-    return (
-      <TextInput
-        secureTextEntry
-        activeOutlineColor="#1D1C1A"
-        textColor="#000"
-        keyboardType={_keyboardType}
-        style={style.input}
-        label={placeholder}
-        value={value}
-        mode={mode}
-        onChangeText={onChangeText}
-      />
-    );
-  }
+  // if (type === "email") {
+  //   return (
+  //     <TextInput
+  //       activeOutlineColor="#1D1C1A"
+  //       textColor="#000"
+  //       secureTextEntry={secure}
+  //       keyboardType={_keyboardType}
+  //       style={style.input}
+  //       label={placeholder}
+  //       value={value}
+  //       mode={mode}
+  //       numberOfLines={numberOfLines}
+  //       onChangeText={onChangeText}
+  //     />
+  //   );
+  // } else if (type === "pass") {
+  //   return (
+  //     <TextInput
+  //       secureTextEntry
+  //       activeOutlineColor="#1D1C1A"
+  //       textColor="#000"
+  //       keyboardType={_keyboardType}
+  //       style={style.input}
+  //       label={placeholder}
+  //       value={value}
+  //       mode={mode}
+  //       numberOfLines={numberOfLines}
+  //       onChangeText={onChangeText}
+  //     />
+  //   );
+  // }
 
   return (
     <TextInput
@@ -87,6 +92,7 @@ const Index: React.FC<Props> = ({
       label={placeholder}
       value={value}
       mode={mode}
+      numberOfLines={numberOfLines}
       onChangeText={onChangeText}
     />
   );

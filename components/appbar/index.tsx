@@ -57,6 +57,8 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "white",
+    top: -10,
+    borderWidth: 1,
   },
 });
 

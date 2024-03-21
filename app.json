@@ -10,17 +10,23 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#254745"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mega01.trmo"
+      "bundleIdentifier": "com.mega01.trmo",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "resizemode": "contain",
+        "backgroundColor": "#254745"
+      },
+      "package": "com.mega01.trmo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#254745"
       },
       "package": "com.mega01.trmo"
     },
@@ -34,7 +40,7 @@
       [
         "expo-font",
         {
-          "fonts": "./assets/fonts/Roboto-Regular.ttf"
+          "fonts": "./assets/fonts/Commissioner-Regular.ttf"
         }
       ]
     ],

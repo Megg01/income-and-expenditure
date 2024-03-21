@@ -9,6 +9,7 @@ import InEx from "./inex";
 import InExTr from "./inextr";
 import Balance from "./balance";
 import Spend from "./spend";
+import ConditionalRender from "./conditional-render";
 import RecentTrans from "./recent-trans";
 
 export {
@@ -24,4 +25,5 @@ export {
   RecentTrans,
   ButtonOpacity,
   Title,
+  ConditionalRender,
 };

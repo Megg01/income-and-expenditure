@@ -8,7 +8,7 @@ const Page = () => {
   const router = useRouter();
 
   const handlePress = async () => {
-    router.navigate("/(sign-in)");
+    // router.navigate("/(auth)/(sign-in)");
   };
 
   return (

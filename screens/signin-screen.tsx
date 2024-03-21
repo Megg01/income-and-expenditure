@@ -5,34 +5,50 @@ import { Link } from "expo-router";
 import React, { useState } from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import { ActivityIndicator } from "react-native-paper";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 const login = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
 
-const login = () => {
-  const { signIn, setActive, isLoaded } = useSignIn();
+  let completeSignIn: any = null;
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSignInPress = async () => {
-    if (!isLoaded) {
+    if (!isLoaded || emailAddress === "" || password === "") {
+      showMessage({
+        message: "Талбаруудаа дахин шалгана уу",
+        type: "warning",
+      });
       return;
     }
     setLoading(true);
     try {
-      const completeSignIn = await signIn.create({
-        identifier: emailAddress,
-        password,
-      });
+      await signIn
+        .create({
+          identifier: emailAddress,
+          password,
+        })
+        .then((res) => {
+          completeSignIn = res;
+        })
+        .catch((error) => {
+          showMessage({
+            message: error.errors[0].message,
+            type: "warning",
+          });
+          setLoading(false);
+          return;
+        });
 
-      // This indicates the user is signed in
-      await setActive({ session: completeSignIn.createdSessionId });
+      await setActive({ session: completeSignIn?.createdSessionId });
       showMessage({ message: "Амжилттай нэвтэрлээ", type: "success" });
-    } catch (err: any) {
-      alert(err.errors[0].message);
+    } catch (error: any) {
+      showMessage({
+        message: error.errors[0].message,
+        type: "warning",
+      });
     } finally {
       setLoading(false);
     }
@@ -52,6 +68,7 @@ const login = () => {
       />
       <TextInput
         type="pass"
+        secure={true}
         placeholder="Нууц үг"
         mode="outlined"
         value={password}

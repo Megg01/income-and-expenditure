@@ -42,3 +42,4 @@ expo-env.d.ts
 
 ./%ProgramData%
 ./%ProgramData%\Microsoft\Windows\UUS\State\_active.uusver
+/%ProgramData%

@@ -22,11 +22,16 @@ const Index: React.FC<Props> = ({
   icon,
   loading = false,
 }) => {
+  const handlePress = () => {
+    if (!loading && onPress) {
+      onPress();
+    }
+  };
   return (
     <Button
       style={style.button}
       mode={mode}
-      onPress={onPress}
+      onPress={handlePress}
       buttonColor={btnColor}
       textColor={txtColor}
       icon={icon}
