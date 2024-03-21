@@ -12,24 +12,10 @@ const Index: React.FC<Props> = ({ value, type }) => {
     <View
       style={[type === "in" ? style.income : style.expense, style.container]}
     >
-      <View
-        style={{
-          backgroundColor: "#FFF",
-          paddingVertical: 10,
-          paddingHorizontal: 13,
-          borderRadius: 15,
-        }}
-      >
+      <View style={style.iconContainer}>
         <FontAwesome size={28} name="money" />
       </View>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          columnGap: 5,
-        }}
-      >
+      <View style={style.textContainer}>
         <Text style={style.text}>{type === "in" ? "Орлого" : "Зарлага"}</Text>
         <Text style={style.text}>{formatCurrency(value)}</Text>
       </View>
@@ -51,7 +37,19 @@ const style = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 20,
     maxWidth: "50%",
-    borderRadius: 22,
+    borderRadius: 28,
+  },
+  iconContainer: {
+    backgroundColor: "#FFF",
+    paddingVertical: 10,
+    paddingHorizontal: 13,
+    borderRadius: 16,
+  },
+  textContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    columnGap: 5,
   },
   text: {
     paddingHorizontal: 5,

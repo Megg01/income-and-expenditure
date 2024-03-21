@@ -11,6 +11,7 @@ import Balance from "./balance";
 import Spend from "./spend";
 import ConditionalRender from "./conditional-render";
 import RecentTrans from "./recent-trans";
+import SignInWithOAuth from "./sign-with-oauth";
 
 export {
   TextInput,
@@ -26,4 +27,5 @@ export {
   ButtonOpacity,
   Title,
   ConditionalRender,
+  SignInWithOAuth,
 };

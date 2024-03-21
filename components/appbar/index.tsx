@@ -17,32 +17,17 @@ const Index: React.FC = () => {
       <Appbar.Action
         icon={({ color }) => (
           <Ionicons
-            size={24}
-            style={{ marginBottom: -3 }}
+            size={28}
             name="person"
-            color={color}
           />
         )}
         onPress={handleDrawer}
       />
-      {/* <Appbar.Action
-        icon={({ color }) => (
-          <AntDesign
-            size={28}
-            style={{ marginBottom: -3 }}
-            name="profile"
-            color={color}
-          />
-        )}
-        onPress={() => {}}
-      /> */}
       <Appbar.Action
         icon={({ color }) => (
           <MaterialIcons
             name="notifications-none"
-            size={24}
-            style={{ marginBottom: -3 }}
-            color={color}
+            size={28}
           />
         )}
         onPress={() => {}}
@@ -57,8 +42,8 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "white",
-    top: -10,
     borderWidth: 1,
+    padding: 5,
   },
 });
 

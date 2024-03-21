@@ -1,4 +1,10 @@
-import { Button, Spacer, TextInput, Title } from "@/components";
+import {
+  Button,
+  SignInWithOAuth,
+  Spacer,
+  TextInput,
+  Title,
+} from "@/components";
 import Colors from "@/constants/Colors";
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
@@ -81,6 +87,8 @@ const login = () => {
         loading={loading}
       ></Button>
 
+      <SignInWithOAuth />
+
       <View style={styles.bottom}>
         {/* <Link href="/reset" asChild> */}
         <Pressable style={styles.button}>
@@ -115,5 +123,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: 8,
   },
 });

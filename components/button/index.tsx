@@ -50,6 +50,8 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     padding: 5,
+    shadowOpacity: 1,
+    shadowOffset: { width: 1, height: 1 },
   },
   label: {},
 });

@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useEffect } from "react";
 import request from "@/utils/customRequest";
-import { useAuth } from "@clerk/clerk-expo";
+import { useAuth, useUser } from "@clerk/clerk-expo";
 
 const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
   return (
@@ -68,6 +68,8 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
 
 export default function AppLayout() {
   const { signOut } = useAuth();
+  const { user } = useUser();
+  console.log("🚀 ~ useEffect ~ user:", user);
 
   const handlePress = async () => {
     await signOut();
@@ -75,18 +77,18 @@ export default function AppLayout() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await request({
-          method: "GET",
-          url: "http://10.150.10.70:5000/api/users",
-        });
-        console.log("🚀 ~ fetchData ~ response:", response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await request({
+    //       method: "GET",
+    //       url: "http://10.150.10.70:5000/api/users",
+    //     });
+    //     console.log("🚀 ~ fetchData ~ response:", response);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // fetchData();
   }, []);
 
   return (
