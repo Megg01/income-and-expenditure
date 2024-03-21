@@ -5,8 +5,8 @@ import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "@/context/authContext";
-import fetchRequest from "@/utils/customRequest";
+import request from "@/utils/customRequest";
+import { useAuth } from "@clerk/clerk-expo";
 
 const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
   return (
@@ -67,21 +67,28 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
 };
 
 export default function AppLayout() {
-  const { isAuthenticated, logout, token } = useContext(AuthContext);
-
-  useEffect(() => {
-    fetchRequest({ url: "users" }).then((res) => {
-      console.log("🚀 ~ useEffect ~ res:", res);
-      return;
-    });
-  }, []);
+  const { signOut } = useAuth();
 
   const handlePress = async () => {
-    const isSuccess = await logout();
-    if (isSuccess) {
-      router.navigate("/(sign-in)");
-    }
+    await signOut();
+    router.navigate("/(sign-in)");
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await request({
+          method: "GET",
+          url: "http://10.150.10.70:5000/api/users",
+        });
+        console.log("🚀 ~ fetchData ~ response:", response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Drawer
       screenOptions={{ header: () => <AppBar /> }}

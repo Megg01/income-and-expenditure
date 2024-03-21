@@ -1,5 +1,6 @@
 import TextInput from "./text-input";
 import Text from "./text";
+import Title from "./title";
 import Button from "./button";
 import ButtonOpacity from "./button-opacity";
 import Spacer from "./spacer";
@@ -22,4 +23,5 @@ export {
   Spend,
   RecentTrans,
   ButtonOpacity,
+  Title,
 };

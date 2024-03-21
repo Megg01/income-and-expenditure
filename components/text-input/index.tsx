@@ -64,7 +64,7 @@ const Index: React.FC<Props> = ({
   } else if (type === "pass") {
     return (
       <TextInput
-        secureTextEntry={secure}
+        secureTextEntry
         activeOutlineColor="#1D1C1A"
         textColor="#000"
         keyboardType={_keyboardType}
@@ -72,9 +72,6 @@ const Index: React.FC<Props> = ({
         label={placeholder}
         value={value}
         mode={mode}
-        right={
-          <TextInput.Icon icon={secure ? "eye" : "eye-off"} onPress={onPress} />
-        }
         onChangeText={onChangeText}
       />
     );

@@ -10,6 +10,7 @@ export type Props = {
   btnColor?: string;
   txtColor?: string;
   icon?: IconSource;
+  loading?: boolean;
 };
 
 const Index: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const Index: React.FC<Props> = ({
   onPress,
   mode = "contained",
   icon,
+  loading = false,
 }) => {
   return (
     <Button
@@ -29,6 +31,7 @@ const Index: React.FC<Props> = ({
       textColor={txtColor}
       icon={icon}
       labelStyle={style.label}
+      loading={loading}
     >
       {label}
     </Button>

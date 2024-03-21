@@ -1,32 +1,24 @@
 import axios from "axios";
-import { AuthContext } from "@/context/authContext";
-import { useContext } from "react";
-
-const API = "http://192.168.1.3:5000/api/";
 
 interface Props {
-  method?: string;
+  method: string;
   url: string;
-  data?: object;
+  isNotification?: boolean;
+  body?: Object;
 }
 
-const fetchRequest = ({ method = "GET", url, data }: Props) => {
-  const context = useContext(AuthContext);
-  const headers = { Authorization: `Bearer ${context?.token}` };
 
-  if (data) {
-    return axios.request({
-      headers,
-      method,
-      url: API + url,
-      data,
-    });
-  }
-  return axios.request({
-    headers,
-    method,
-    url: API + url,
-  });
-};
+const request = async ({ method, url, isNotification = false, body={} }:Props) => {
+  
+  let result = null;
+  
+  await axios({
+    method, url,
+  }).then((response) => {
+    result = response?.data;
+  })
+  return result;
+}
 
-export default fetchRequest;
+
+export default request;

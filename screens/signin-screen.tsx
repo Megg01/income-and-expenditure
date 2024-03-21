@@ -1,125 +1,100 @@
-import { Button, TextInput } from "@/components/index";
+import { Button, Spacer, TextInput, Title } from "@/components";
 import Colors from "@/constants/Colors";
-import { AuthContext } from "@/context/authContext";
-import { useRouter } from "expo-router";
-import { useContext, useState } from "react";
-import { View, Text, ScrollView, Platform } from "react-native";
+import { useSignIn } from "@clerk/clerk-expo";
+import { Link } from "expo-router";
+import React, { useState } from "react";
+import { View, StyleSheet, Pressable, Text } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import { ActivityIndicator } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Page = () => {
-  const { login, token, isAuthenticated } = useContext(AuthContext);
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+const login = () => {
+  const { signIn, setActive, isLoaded } = useSignIn();
 
-  const handleSubmit = async () => {
-    const isSigned = await login(email, password);
-    if (isSigned) {
-      router.navigate("/(app)/(tabs)/home");
-      console.log("🚀 ~ Page ~ HOME:", token);
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onSignInPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: emailAddress,
+        password,
+      });
+
+      // This indicates the user is signed in
+      await setActive({ session: completeSignIn.createdSessionId });
+      showMessage({ message: "Амжилттай нэвтэрлээ", type: "success" });
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      <Text style={{ textAlign: "center", fontSize: 20 }}>Нэвтрэх</Text>
-      <ScrollView
-        automaticallyAdjustKeyboardInsets
-        keyboardShouldPersistTaps="never"
-        contentContainerStyle={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          marginTop: 50,
-          marginLeft: 15,
-          marginRight: 15,
-          height: "100%",
-        }}
-      >
-        <TextInput
-          type="email"
-          placeholder="Имэйл"
-          mode="outlined"
-          value={email}
-          onChangeText={(value) => setEmail(value)}
-        ></TextInput>
-        <TextInput
-          type="pass"
-          secure={secureTextEntry}
-          placeholder="Нууц үг"
-          mode="outlined"
-          value={password}
-          onChangeText={(value) => setPassword(value)}
-          onPress={() => setSecureTextEntry(!secureTextEntry)}
-        ></TextInput>
-        <Button onPress={handleSubmit} label="Нэвтрэх" />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-              marginBottom: 15,
-            }}
-            onPress={() => {}}
-          >
-            Нууц үгээ мартсан
-          </Text>
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-              marginBottom: 15,
-            }}
-            onPress={() => {
-              router.navigate("/(sign-up)");
-            }}
-          >
-            Бүртгүүлэх
-          </Text>
-        </View>
-        <ActivityIndicator
-          animating={isAuthenticated}
-          color={Colors.green}
-          style={{
-            position: "absolute",
-          }}
-        />
-      </ScrollView>
-      <View
-        style={{
-          position: "absolute",
-          bottom: Platform.OS === "ios" ? 0 : 10,
-          width: "100%",
-        }}
-      >
-        <Text
-          style={{
-            textAlign: "center",
-            textDecorationLine: "underline",
-          }}
-        >
-          Үйлчилгээний нөхцөл
-        </Text>
+    <SafeAreaView style={styles.container}>
+      <Title>Нэвтрэх</Title>
+
+      <Spacer size={100} />
+      <TextInput
+        type="email"
+        placeholder="Имэйл"
+        mode="outlined"
+        value={emailAddress}
+        onChangeText={(value) => setEmailAddress(value)}
+      />
+      <TextInput
+        type="pass"
+        placeholder="Нууц үг"
+        mode="outlined"
+        value={password}
+        onChangeText={(value) => setPassword(value)}
+      />
+
+      <Button
+        label="Нэвтрэх"
+        onPress={onSignInPress}
+        loading={loading}
+      ></Button>
+
+      <View style={styles.bottom}>
+        {/* <Link href="/reset" asChild> */}
+        <Pressable style={styles.button}>
+          <Text>Нууц үг мартсан?</Text>
+        </Pressable>
+        {/* </Link> */}
+        <Link href="/(sign-up)" asChild>
+          <Pressable style={styles.button}>
+            <Text>Бүртгүүлэх</Text>
+          </Pressable>
+        </Link>
       </View>
     </SafeAreaView>
   );
 };
 
-export default Page;
+export default login;
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    position: "relative",
+    paddingHorizontal: 20,
+    height: "100%",
+  },
+  button: {
+    margin: 8,
+    alignItems: "center",
+  },
+  bottom: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+});
