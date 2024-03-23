@@ -1,4 +1,4 @@
-import Colors from "@/constants/Colors";
+import Global from "@/constants/Global";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
@@ -26,7 +26,7 @@ const style = StyleSheet.create({
   text: {
     textAlign: "center",
     fontWeight: "bold",
-    color: Colors.text,
+    color: Global.colors.text,
     fontSize: 20,
   },
 });

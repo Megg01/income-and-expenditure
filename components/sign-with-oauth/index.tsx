@@ -1,11 +1,11 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { Button } from "react-native-paper";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../../hooks/useWarmUpBrowser";
-import Colors from "@/constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
+import Global from "@/constants/Global";
+import LogoGoogle from "../../assets/images/google.png";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -34,7 +34,7 @@ const SignInWithOAuth = () => {
       onPress={onPress}
       labelStyle={styles.label}
       style={styles.google}
-      icon={() => <AntDesign name="google" size={24} color="black" />}
+      icon={() => <Image width={20} height={20} source={LogoGoogle} />}
     >
       Google хаягаар нэвтрэх
     </Button>
@@ -43,15 +43,15 @@ const SignInWithOAuth = () => {
 
 const styles = StyleSheet.create({
   google: {
-    backgroundColor: Colors.white,
+    backgroundColor: Global.colors.white,
     paddingVertical: 6,
     textAlign: "left",
-    shadowColor: Colors.green,
+    shadowColor: Global.colors.green,
     shadowOpacity: 1,
     shadowOffset: { width: 1, height: 1 },
   },
   label: {
-    color: Colors.text,
+    color: Global.colors.text,
   },
 });
 

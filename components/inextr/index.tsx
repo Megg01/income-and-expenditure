@@ -2,6 +2,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { formatCurrency } from "@/utils";
+import Global from "@/constants/Global";
 type Props = {
   type: "in" | "ex";
 };
@@ -35,10 +36,10 @@ const Index: React.FC = () => {
 
 const style = StyleSheet.create({
   income: {
-    backgroundColor: "#00A86B",
+    backgroundColor: Global.colors.income,
   },
   expense: {
-    backgroundColor: "#FF6961",
+    backgroundColor: Global.colors.expense,
   },
   container: {
     display: "flex",
@@ -51,7 +52,7 @@ const style = StyleSheet.create({
   },
   text: {
     paddingHorizontal: 5,
-    color: "white",
+    color: Global.colors.white,
     fontSize: 16,
     fontWeight: "bold",
   },

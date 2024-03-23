@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { formatCurrency } from "@/utils";
-import Colors from "@/constants/Colors";
+import Global from "@/constants/Global";
 import { SegmentedButtons } from "react-native-paper";
 type Props = {
   value: number;
@@ -39,15 +39,13 @@ const style = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     paddingVertical: 15,
-    paddingHorizontal: 10,
   },
   graytext: {
-    color: Colors.gray,
+    color: Global.colors.gray,
     fontSize: 16,
   },
   text: {
-    paddingHorizontal: 5,
-    color: Colors.text,
+    color: Global.colors.text,
     fontSize: 16,
     fontWeight: "bold",
   },

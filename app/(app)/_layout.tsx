@@ -68,9 +68,6 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
 
 export default function AppLayout() {
   const { signOut } = useAuth();
-  const { user } = useUser();
-  console.log("🚀 ~ useEffect ~ user:", user);
-
   const handlePress = async () => {
     await signOut();
     router.navigate("/(sign-in)");

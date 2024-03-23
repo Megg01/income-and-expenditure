@@ -1,3 +1,4 @@
+import Global from "@/constants/Global";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
@@ -13,7 +14,7 @@ export type Props = {
 };
 
 const Index: React.FC<Props> = ({
-  btnColor = "#c3d6d5",
+  btnColor = Global.colors.background,
   txtColor = "#000",
   label,
   onPress,
@@ -38,6 +39,8 @@ const Index: React.FC<Props> = ({
 const style = StyleSheet.create({
   button: {
     borderRadius: 20,
+    shadowOffset: { height: 1, width: 1 },
+    shadowOpacity: 0.1,
     minWidth: "40%",
     opacity: 0.7,
   },

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { formatCurrency } from "@/utils";
-import Colors from "@/constants/Colors";
+import Global from "@/constants/Global";
 type Props = {
   value: number;
 };
@@ -21,16 +21,15 @@ const style = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     paddingVertical: 15,
-    paddingHorizontal: 10,
   },
   graytext: {
-    color: Colors.gray,
-    fontSize: 16,
+    color: Global.colors.gray,
+    fontSize: 18,
   },
   text: {
-    paddingHorizontal: 5,
-    color: Colors.text,
-    fontSize: 28,
+    paddingTop: 2,
+    color: Global.colors.text,
+    fontSize: 30,
     fontWeight: "bold",
   },
 });

@@ -12,6 +12,7 @@ import Spend from "./spend";
 import ConditionalRender from "./conditional-render";
 import RecentTrans from "./recent-trans";
 import SignInWithOAuth from "./sign-with-oauth";
+import Card from "./card";
 
 export {
   TextInput,
@@ -28,4 +29,5 @@ export {
   Title,
   ConditionalRender,
   SignInWithOAuth,
+  Card,
 };

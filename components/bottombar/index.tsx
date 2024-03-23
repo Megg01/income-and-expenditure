@@ -1,3 +1,4 @@
+import Global from "@/constants/Global";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Appbar, FAB, useTheme } from "react-native-paper";
@@ -41,7 +42,7 @@ const Index = () => {
 
 const styles = StyleSheet.create({
   bottom: {
-    backgroundColor: "aquamarine",
+    backgroundColor: Global.colors.aqua,
     position: "absolute",
     left: 0,
     right: 0,
@@ -53,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Index;
+export default React.memo(Index);

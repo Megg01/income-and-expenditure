@@ -1,3 +1,4 @@
+import Global from "@/constants/Global";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
@@ -37,7 +38,7 @@ const Index: React.FC<Props> = ({
       <TextInput
         secureTextEntry={secure}
         activeOutlineColor="#1D1C1A"
-        textColor="#000"
+        textColor={Global.colors.text}
         keyboardType={_keyboardType}
         style={style.input}
         label={placeholder}
@@ -85,7 +86,7 @@ const Index: React.FC<Props> = ({
   return (
     <TextInput
       activeOutlineColor="#1D1C1A"
-      textColor="#000"
+      textColor={Global.colors.text}
       secureTextEntry={secure}
       keyboardType={_keyboardType}
       style={style.input}
