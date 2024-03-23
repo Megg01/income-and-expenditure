@@ -13,6 +13,8 @@ import ConditionalRender from "./conditional-render";
 import RecentTrans from "./recent-trans";
 import SignInWithOAuth from "./sign-with-oauth";
 import Card from "./card";
+import InputMoney from "./input-money";
+import Select from "./picker-select";
 
 export {
   TextInput,
@@ -30,4 +32,6 @@ export {
   ConditionalRender,
   SignInWithOAuth,
   Card,
+  InputMoney,
+  Select,
 };

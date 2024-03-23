@@ -10,9 +10,9 @@ import {
   Platform,
   StyleSheet,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Global from "@/constants/Global";
 
 const Index = () => {

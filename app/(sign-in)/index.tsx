@@ -8,9 +8,8 @@ import {
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import React, { memo, useState } from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet, Pressable, Text, SafeAreaView } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
   const { signIn, setActive, isLoaded } = useSignIn();

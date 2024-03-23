@@ -3,10 +3,9 @@ import Global from "@/constants/Global";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { memo, useRef, useState } from "react";
-import { View, Text, Platform, StyleSheet } from "react-native";
+import { View, Text, Platform, StyleSheet, SafeAreaView } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import OTPTextView from "react-native-otp-textinput";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
   const router = useRouter();

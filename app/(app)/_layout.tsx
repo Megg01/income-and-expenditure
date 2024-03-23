@@ -1,7 +1,7 @@
 import { AppBar } from "@/components";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
-import { router } from "expo-router";
+import { Slot, router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useEffect } from "react";
@@ -33,7 +33,7 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
           onPress={() => {
             router.navigate("/(app)/(tabs)/home");
           }}
-        ></DrawerItem>
+        />
         <DrawerItem
           label="Хувийн мэдээлэл"
           icon={({ color, size }) => (
@@ -47,7 +47,7 @@ const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
           onPress={() => {
             router.navigate("/(app)/(profile)");
           }}
-        ></DrawerItem>
+        />
       </View>
       <DrawerItem
         label="Гарах"
@@ -92,9 +92,8 @@ export default function AppLayout() {
     <Drawer
       screenOptions={{ header: () => <AppBar /> }}
       drawerContent={() => <CustomDrawerContent handlePress={handlePress} />}
-    >
-      <Drawer.Screen name="(profile)" options={{ headerShown: true }} />
-    </Drawer>
+      initialRouteName="/(app)/(tabs)/home"
+    />
   );
 }
 

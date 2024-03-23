@@ -1,13 +1,3 @@
-// import { SafeAreaView } from "react-native-safe-area-context";
-// import { Text } from "react-native";
-
-// export default function Index() {
-//   return (
-//     <SafeAreaView>
-//       <Text>BUDGET</Text>
-//     </SafeAreaView>
-//   );
-// }
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { List, Title, Paragraph, Button } from 'react-native-paper';

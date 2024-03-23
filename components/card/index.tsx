@@ -1,24 +1,35 @@
 import * as React from "react";
-import { Text } from "react-native-paper";
-import { Image, StyleSheet, View } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import Global from "@/constants/Global";
 import { formatCurrency } from "@/utils";
-import Shopping from "@/assets/icons/shopping.svg";
-import SvgUri from "react-native-svg-uri";
+import Shopping from "@/assets/icons/shopping.png";
 
 type Props = {
   title: string;
   content: string;
   value: number;
-  type: string;
+  type:
+    | string
+    | "shopping"
+    | "food"
+    | "subscription"
+    | "transport"
+    | "salary"
+    | "passive";
+  isIncome: boolean;
   date: string;
 };
 
-const Component = ({ title, content, value, type, date }: Props) => (
-  <View style={style.card}>
+const Component = ({ title, content, value, type, isIncome, date }: Props) => (
+  <Card
+    contentStyle={style.card}
+    theme={{ roundness: 24 }}
+    onPress={() => alert("You pressed a button")}
+  >
     <View style={style.first}>
       <View>
-        <SvgUri width="50" height="50" svgXmlData={Shopping} />
+        <Image source={Shopping} style={{ width: 40, height: 40 }} />
       </View>
       <View style={style.mid}>
         <Text style={style.title}>{title}</Text>
@@ -26,21 +37,28 @@ const Component = ({ title, content, value, type, date }: Props) => (
       </View>
     </View>
     <View style={style.last}>
-      <Text style={style.value}>{formatCurrency(value)}</Text>
+      <Text
+        style={{
+          ...style.value,
+          color: isIncome ? Global.colors.income : Global.colors.expense,
+        }}
+      >
+        {formatCurrency(value * (type === "in" ? 1 : -1))}
+      </Text>
       <Text style={style.date}>{date}</Text>
     </View>
-  </View>
+  </Card>
 );
 
 export default React.memo(Component);
 
 const style = StyleSheet.create({
   card: {
+    borderRadius: 24,
     maxWidth: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    borderRadius: 24,
     backgroundColor: Global.colors.background,
     padding: 15,
   },
