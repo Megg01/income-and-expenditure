@@ -8,7 +8,14 @@ import {
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import React, { memo, useState } from "react";
-import { View, StyleSheet, Pressable, Text, SafeAreaView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Text,
+  SafeAreaView,
+  Platform,
+} from "react-native";
 import { showMessage } from "react-native-flash-message";
 
 const Index = () => {
@@ -59,48 +66,46 @@ const Index = () => {
     }
   };
   return (
-    <SafeAreaView>
-      <SafeAreaView style={styles.container}>
-        <Title>Нэвтрэх</Title>
+    <SafeAreaView style={styles.container}>
+      <Title>Нэвтрэх</Title>
 
-        <Spacer size={100} />
-        <TextInput
-          type="email"
-          placeholder="Имэйл"
-          mode="outlined"
-          value={emailAddress}
-          onChangeText={(value) => setEmailAddress(value)}
-        />
-        <TextInput
-          type="pass"
-          secure={true}
-          placeholder="Нууц үг"
-          mode="outlined"
-          value={password}
-          onChangeText={(value) => setPassword(value)}
-        />
+      <Spacer size={100} />
+      <TextInput
+        type="email"
+        placeholder="Имэйл"
+        mode="outlined"
+        value={emailAddress}
+        onChangeText={(value) => setEmailAddress(value)}
+      />
+      <TextInput
+        type="pass"
+        secure={true}
+        placeholder="Нууц үг"
+        mode="outlined"
+        value={password}
+        onChangeText={(value) => setPassword(value)}
+      />
 
-        <Button
-          label="Нэвтрэх"
-          onPress={onSignInPress}
-          loading={loading}
-        ></Button>
+      <Button
+        label="Нэвтрэх"
+        onPress={onSignInPress}
+        loading={loading}
+      ></Button>
 
-        <SignInWithOAuth />
+      <SignInWithOAuth />
 
-        <View style={styles.bottom}>
-          {/* <Link href="/reset" asChild> */}
+      <View style={styles.bottom}>
+        {/* <Link href="/reset" asChild> */}
+        <Pressable style={styles.button}>
+          <Text>Нууц үг мартсан?</Text>
+        </Pressable>
+        {/* </Link> */}
+        <Link href="/(sign-up)" asChild>
           <Pressable style={styles.button}>
-            <Text>Нууц үг мартсан?</Text>
+            <Text>Бүртгүүлэх</Text>
           </Pressable>
-          {/* </Link> */}
-          <Link href="/(sign-up)" asChild>
-            <Pressable style={styles.button}>
-              <Text>Бүртгүүлэх</Text>
-            </Pressable>
-          </Link>
-        </View>
-      </SafeAreaView>
+        </Link>
+      </View>
     </SafeAreaView>
   );
 };
@@ -114,6 +119,7 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingHorizontal: 20,
     height: "100%",
+    paddingTop: Platform.OS === "ios" ? 0 : 60,
   },
   button: {
     margin: 8,

@@ -1,71 +1,63 @@
 import React, { memo, useState } from "react";
 import { StyleSheet } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { SelectCountry } from "react-native-element-dropdown";
 
-const data = [
-  { label: "Item 1", value: "1" },
-  { label: "Item 2", value: "2" },
-  { label: "Item 3", value: "3" },
-  { label: "Item 4", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
-];
+import { formatCurrency } from "@/utils";
+import Global from "@/constants/Global";
+type Props = {
+  data: any;
+  placeholder?: string;
+  value: string;
+  handleChange: (value: any) => void;
+};
 
-const Index = () => {
-  const [value, setValue] = useState(null);
-
+const Index = ({ data, placeholder = "", value, handleChange }: Props) => {
   return (
-    <Dropdown
+    <SelectCountry
       style={styles.dropdown}
-      placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
+      placeholderStyle={styles.placeholderStyle}
+      imageStyle={styles.imageStyle}
       iconStyle={styles.iconStyle}
-      data={data}
-      search
-      maxHeight={300}
-      labelField="label"
-      valueField="value"
-      placeholder="Select item"
-      searchPlaceholder="Search..."
+      maxHeight={200}
       value={value}
-      onChange={(item: any) => {
-        setValue(item?.value);
+      data={data}
+      valueField="value"
+      labelField="label"
+      imageField="image"
+      placeholder={placeholder}
+      searchPlaceholder="Хайх..."
+      onChange={(e: any) => {
+        handleChange(e?.value);
       }}
-      renderLeftIcon={() => (
-        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-      )}
     />
   );
 };
 
-export default memo(Index);
-
 const styles = StyleSheet.create({
   dropdown: {
-    margin: 16,
-    height: 50,
-    borderBottomColor: "gray",
-    borderBottomWidth: 0.5,
+    height: 56,
+    backgroundColor: Global.colors.background,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    borderColor: Global.colors.whiteBorder,
   },
-  icon: {
-    marginRight: 5,
+  imageStyle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
   },
   placeholderStyle: {
     fontSize: 16,
   },
   selectedTextStyle: {
     fontSize: 16,
+    marginLeft: 8,
   },
   iconStyle: {
     width: 20,
     height: 20,
   },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
 });
+
+export default memo(Index);

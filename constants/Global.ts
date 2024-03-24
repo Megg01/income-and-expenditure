@@ -5,6 +5,7 @@ const Global = {
     white: "#FAF8F6",
     gray: "#91919F",
     text: "#000",
+    whiteBorder: "#F1F1FA",
     aqua: "aquamerine",
     background: "#fff",
     income: "#00A86B",
@@ -12,6 +13,7 @@ const Global = {
   },
   padding: {
     screen: 10,
+    inputMoney: 20,
   },
   tabIconDefault: "#ccc",
   tabIconFocused: "#000",

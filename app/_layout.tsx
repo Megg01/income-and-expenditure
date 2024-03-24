@@ -9,6 +9,8 @@ import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
 import { GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
+import { BottomSheetProvider } from "@gorhom/bottom-sheet/lib/typescript/contexts";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -76,8 +78,10 @@ export default function RootLayout() {
     >
       <GlobalProvider>
         <PaperProvider>
-          <FlashMessage position="top" />
-          <InitialLayout />
+          <BottomSheetModalProvider>
+            <FlashMessage position="top" />
+            <InitialLayout />
+          </BottomSheetModalProvider>
         </PaperProvider>
       </GlobalProvider>
     </ClerkProvider>

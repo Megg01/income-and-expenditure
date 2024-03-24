@@ -77,84 +77,73 @@ const Index = () => {
   };
 
   return (
-    <SafeAreaView>
-      <SafeAreaView style={styles.container}>
-        <Title>Бүртгүүлэх</Title>
+    <SafeAreaView style={styles.container}>
+      <Title>Бүртгүүлэх</Title>
 
-        <ScrollView
-          automaticallyAdjustKeyboardInsets
-          keyboardShouldPersistTaps="never"
-          contentContainerStyle={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            marginTop: 50,
-            height: "100%",
+      <ScrollView
+        automaticallyAdjustKeyboardInsets
+        keyboardShouldPersistTaps="never"
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
+        <TextInput
+          type="text"
+          placeholder="Овог"
+          mode="outlined"
+          value={lastName}
+          onChangeText={(value) => setLastName(value)}
+        ></TextInput>
+        <TextInput
+          type="text"
+          placeholder="Нэр"
+          mode="outlined"
+          value={firstName}
+          onChangeText={(value) => setFirstName(value)}
+        ></TextInput>
+        <TextInput
+          type="email"
+          placeholder="Имэйл"
+          mode="outlined"
+          value={emailAddress}
+          onChangeText={(value) => setEmailAddress(value)}
+        ></TextInput>
+        <TextInput
+          type="pass"
+          secure={true}
+          placeholder="Нууц үг"
+          mode="outlined"
+          value={password}
+          onChangeText={(value) => setPassword(value)}
+        ></TextInput>
+        <TextInput
+          type="pass"
+          secure={true}
+          placeholder="Нууц үг давтах"
+          mode="outlined"
+          value={passwordAgain}
+          onChangeText={(value) => setPasswordAgain(value)}
+        ></TextInput>
+        <Button onPress={onSignUpPress} label="Бүртгүүлэх" loading={pending} />
+
+        <View style={styles.bottom}>
+          <Link href="/(sign-in)" asChild>
+            <Pressable style={styles.button}>
+              <Text>Нэвтрэх</Text>
+            </Pressable>
+          </Link>
+        </View>
+      </ScrollView>
+
+      <View style={styles.policy}>
+        <Text
+          style={{
+            textAlign: "center",
+            textDecorationLine: "underline",
           }}
         >
-          <TextInput
-            type="text"
-            placeholder="Овог"
-            mode="outlined"
-            value={lastName}
-            onChangeText={(value) => setLastName(value)}
-          ></TextInput>
-          <TextInput
-            type="text"
-            placeholder="Нэр"
-            mode="outlined"
-            value={firstName}
-            onChangeText={(value) => setFirstName(value)}
-          ></TextInput>
-          <TextInput
-            type="email"
-            placeholder="Имэйл"
-            mode="outlined"
-            value={emailAddress}
-            onChangeText={(value) => setEmailAddress(value)}
-          ></TextInput>
-          <TextInput
-            type="pass"
-            secure={true}
-            placeholder="Нууц үг"
-            mode="outlined"
-            value={password}
-            onChangeText={(value) => setPassword(value)}
-          ></TextInput>
-          <TextInput
-            type="pass"
-            secure={true}
-            placeholder="Нууц үг давтах"
-            mode="outlined"
-            value={passwordAgain}
-            onChangeText={(value) => setPasswordAgain(value)}
-          ></TextInput>
-          <Button
-            onPress={onSignUpPress}
-            label="Бүртгүүлэх"
-            loading={pending}
-          />
-
-          <View style={styles.bottom}>
-            <Link href="/(sign-in)" asChild>
-              <Pressable style={styles.button}>
-                <Text>Нэвтрэх</Text>
-              </Pressable>
-            </Link>
-          </View>
-        </ScrollView>
-
-        <View style={styles.policy}>
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-            }}
-          >
-            Үйлчилгээний нөхцөл
-          </Text>
-        </View>
-      </SafeAreaView>
+          Үйлчилгээний нөхцөл
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
@@ -165,6 +154,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingHorizontal: 20,
+    paddingTop: Platform.OS === "ios" ? 0 : 60,
+  },
+  scroll: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    marginTop: 50,
+    height: "100%",
   },
   button: {
     margin: 8,

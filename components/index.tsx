@@ -15,6 +15,7 @@ import SignInWithOAuth from "./sign-with-oauth";
 import Card from "./card";
 import InputMoney from "./input-money";
 import Select from "./picker-select";
+import Upload from "./upload";
 
 export {
   TextInput,
@@ -34,4 +35,5 @@ export {
   Card,
   InputMoney,
   Select,
+  Upload,
 };
