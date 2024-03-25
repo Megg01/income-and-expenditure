@@ -10,6 +10,8 @@ const Global = {
     background: "#fff",
     income: "#00A86B",
     expense: "#FF6961",
+    violet: "#7F3DFF",
+    blue: "#0077FF"
   },
   padding: {
     screen: 10,

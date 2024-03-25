@@ -19,6 +19,7 @@ const Index = ({ data, placeholder = "", value, handleChange }: Props) => {
       placeholderStyle={styles.placeholderStyle}
       imageStyle={styles.imageStyle}
       iconStyle={styles.iconStyle}
+      containerStyle={styles.containerStyle}
       maxHeight={200}
       value={value}
       data={data}
@@ -57,6 +58,10 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
+  },
+  containerStyle: {
+    borderEndEndRadius: 16,
+    borderEndStartRadius: 16,
   },
 });
 

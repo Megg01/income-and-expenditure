@@ -1,14 +1,23 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
 import { Platform, StyleSheet, View } from "react-native";
+import { IconButton } from "react-native-paper";
 import Global from "@/constants/Global";
+import Button from "@/components/button";
 
 export default function TabsLayout() {
+  const router = useRouter();
+
+  const handlePressMid = () => {
+    router.navigate("/(app)/screens/input");
+  };
+
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs>
       <Tabs.Screen
         name="home"
         options={{
+          headerShown: true,
           tabBarLabel: "Нүүр",
           title: "Нүүр",
           tabBarActiveTintColor: Global.tabIconFocused,
@@ -25,7 +34,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="trans"
         options={{
-          header: () => <View />,
+          headerShown: true,
           tabBarLabel: "Гүйлгээ",
           title: "Гүйлгээ",
           tabBarActiveTintColor: Global.tabIconFocused,
@@ -36,11 +45,19 @@ export default function TabsLayout() {
               <FontAwesome name="plus" size={28} color={Global.colors.white} />
             </View>
           ),
+          tabBarHideOnKeyboard: true,
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            handlePressMid();
+          },
+        })}
       />
       <Tabs.Screen
         name="budget"
         options={{
+          headerShown: true,
           tabBarLabel: "Нийт",
           title: "Нийт",
           tabBarActiveTintColor: Global.tabIconFocused,

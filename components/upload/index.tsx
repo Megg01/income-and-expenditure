@@ -1,27 +1,19 @@
 import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { memo, useCallback, useRef } from "react";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { Entypo } from "@expo/vector-icons";
 import Global from "@/constants/Global";
 
-const Index = () => {
-  const bottomSheetRef = useRef<BottomSheet>(null);
+interface Props {
+  onPress: () => void;
+}
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
+const Index = ({ onPress }: Props) => {
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.view}>
         <Entypo name="attachment" size={20} color="black" />
         <Text>Зураг оруулах</Text>
       </View>
-      <BottomSheet ref={bottomSheetRef} onChange={handleSheetChanges}>
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-        </BottomSheetView>
-      </BottomSheet>
     </Pressable>
   );
 };

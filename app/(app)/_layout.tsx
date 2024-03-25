@@ -90,7 +90,8 @@ export default function AppLayout() {
 
   return (
     <Drawer
-      screenOptions={{ header: () => <AppBar /> }}
+      screenOptions={{ headerShown: false }}
+      // screenOptions={{ header: () => <AppBar /> }}
       drawerContent={() => <CustomDrawerContent handlePress={handlePress} />}
       initialRouteName="/(app)/(tabs)/home"
     />

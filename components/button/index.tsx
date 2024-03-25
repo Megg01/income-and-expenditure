@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import { Button } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
@@ -11,6 +11,7 @@ export type Props = {
   txtColor?: string;
   icon?: IconSource;
   loading?: boolean;
+  customStyle?: ViewStyle;
 };
 
 const Index: React.FC<Props> = ({
@@ -21,12 +22,30 @@ const Index: React.FC<Props> = ({
   mode = "contained",
   icon,
   loading = false,
+  customStyle,
 }) => {
   const handlePress = () => {
     if (!loading && onPress) {
       onPress();
     }
   };
+
+  if (customStyle) {
+    return (
+      <Button
+        style={(style.button, { ...customStyle })}
+        mode={mode}
+        onPress={handlePress}
+        buttonColor={btnColor}
+        textColor={txtColor}
+        icon={icon}
+        labelStyle={style.label}
+        loading={loading}
+      >
+        {label}
+      </Button>
+    );
+  }
   return (
     <Button
       style={style.button}

@@ -16,6 +16,9 @@ import Card from "./card";
 import InputMoney from "./input-money";
 import Select from "./picker-select";
 import Upload from "./upload";
+import Camera from "./camera";
+import PickerImage from "./image-picker";
+import DropdownHeader from "./dropdown-header";
 
 export {
   TextInput,
@@ -36,4 +39,7 @@ export {
   InputMoney,
   Select,
   Upload,
+  Camera,
+  PickerImage,
+  DropdownHeader,
 };

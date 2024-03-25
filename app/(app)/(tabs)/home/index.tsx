@@ -13,7 +13,14 @@ const Index = () => {
       </View>
       <Spend />
       <RecentTrans />
-      <Card title="Хувцас" content="Цамц авсан." value={120} type="income" date="2023-03-22" />
+      <Card
+        title="Хувцас"
+        content="Цамц авсан."
+        value={120}
+        type="income"
+        isIncome
+        date="2023-03-22"
+      />
     </ScrollView>
   );
 };
