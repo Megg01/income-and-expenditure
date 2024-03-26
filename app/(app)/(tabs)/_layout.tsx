@@ -4,6 +4,7 @@ import { Platform, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import Global from "@/constants/Global";
 import Button from "@/components/button";
+import { AppBar } from "@/components";
 
 export default function TabsLayout() {
   const router = useRouter();
@@ -17,7 +18,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          headerShown: true,
+          // headerShown: true,
+          header: () => <AppBar />,
           tabBarLabel: "Нүүр",
           title: "Нүүр",
           tabBarActiveTintColor: Global.tabIconFocused,

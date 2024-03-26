@@ -1,12 +1,10 @@
-import { AppBar } from "@/components";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
-import { Slot, router } from "expo-router";
+import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useEffect } from "react";
-import request from "@/utils/customRequest";
-import { useAuth, useUser } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
 
 const CustomDrawerContent = ({ handlePress }: { handlePress: () => void }) => {
   return (

@@ -9,7 +9,7 @@ const InputTypes = [
   },
   {
     value: "3",
-    label: "Гүйлгээ",
+    label: "Шилжүүлэг",
   },
 ];
 

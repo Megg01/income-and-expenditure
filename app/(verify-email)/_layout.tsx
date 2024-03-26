@@ -16,6 +16,7 @@ export default function SignUpLayout() {
             }}
           />
         ),
+        headerTintColor: "transparent"
       }}
     />
   );

@@ -16,7 +16,7 @@ const Index = ({ size = 20 }: Props) => {
 
   return (
     <TextInput
-      style={(style.input, { fontSize: size })}
+      style={[style.input, { fontSize: size }]}
       value={value}
       defaultValue="0"
       placeholder="sdf"

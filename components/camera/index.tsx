@@ -56,13 +56,13 @@ const Index = ({ value, setValue }: Props) => {
 
   return (
     <Pressable style={style.pressable} onPress={onCameraPress}>
-      {!image && (
-        <View style={{ display: "flex", alignItems: "center" }}>
-          <Entypo name="camera" size={24} color={Global.colors.violet} />
-          <Text style={style.pressable_text}>Камер</Text>
-        </View>
-      )}
-      {image && <Image source={{ uri: image }} style={style.image} />}
+      {/* {!image && ( */}
+      <View style={{ display: "flex", alignItems: "center" }}>
+        <Entypo name="camera" size={24} color={Global.colors.green} />
+        <Text style={style.pressable_text}>Камер</Text>
+      </View>
+      {/*  )} */}
+      {/* {image && <Image source={{ uri: image }} style={style.image} />} */}
       <Modal visible={isCamera}>
         <Camera ref={(ref) => setCamera(ref)} style={styles.camera}></Camera>
         <View style={styles.close}>
@@ -75,8 +75,8 @@ const Index = ({ value, setValue }: Props) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={onPressCapture}>
-            <Entypo name="camera" size={24} color={Global.colors.violet} />
-            <Text style={styles.text}>Зураг авах</Text>
+            <Entypo name="camera" size={50} color={Global.colors.whiteGreen} />
+            {/* <Text style={styles.text}>Зураг авах</Text> */}
           </TouchableOpacity>
         </View>
       </Modal>
@@ -89,7 +89,7 @@ const style = StyleSheet.create({
     borderColor: Global.colors.whiteBorder,
     borderWidth: 1,
     borderRadius: 16,
-    backgroundColor: "#EEE5FF",
+    backgroundColor: Global.colors.whiteGreen,
     width: "40%",
     padding: 16,
     display: "flex",
@@ -98,7 +98,7 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   pressable_text: {
-    color: Global.colors.violet,
+    color: Global.colors.green,
     fontWeight: "bold",
   },
   image: {

@@ -3,11 +3,11 @@ import * as SecureStore from "expo-secure-store";
 import { useFonts } from "expo-font";
 import { Slot, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 // import { AuthProvider, AuthContext } from "@/context/authContext";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
-import { GlobalProvider } from "@/context/globalCtx";
+import { GlobalContext, GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
 
 export { ErrorBoundary } from "expo-router";
@@ -32,9 +32,10 @@ const tokenCache = {
 };
 
 const InitialLayout = () => {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, userId } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const context = useContext(GlobalContext);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -43,6 +44,10 @@ const InitialLayout = () => {
       router.replace("/(app)/(tabs)/home");
     } else if (!isSignedIn) {
       router.replace("/(sign-in)");
+    }
+
+    if (isSignedIn) {
+      context?.setUser(userId);
     }
   }, [isSignedIn]);
 

@@ -10,8 +10,8 @@ import {
   Platform,
   StyleSheet,
   Pressable,
-  SafeAreaView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { showMessage } from "react-native-flash-message";
 import Global from "@/constants/Global";
 
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === "ios" ? 0 : 60,
+    paddingTop: Platform.OS === "ios" ? 50 : 60,
   },
   scroll: {
     display: "flex",
@@ -182,8 +182,9 @@ const styles = StyleSheet.create({
   },
   policy: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 0 : 10,
-    width: "100%",
+    bottom: Platform.OS === "ios" ? 25 : 10,
+    left: "48%",
+    transform: [{ translateX: -50 }],
   },
 });
 

@@ -37,7 +37,7 @@ const style = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: Global.colors.white,
+    backgroundColor: "transparent",
     shadowOffset: { width: 1, height: 1 },
     shadowColor: Global.colors.text,
     shadowOpacity: 0.1,

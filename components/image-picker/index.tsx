@@ -36,13 +36,13 @@ const PickerImage = ({ value, setValue }: Props) => {
 
   return (
     <Pressable style={style.pressable} onPress={pickImage}>
-      {!image && (
+      {/* {!image && ( */}
         <View style={{ display: "flex", alignItems: "center" }}>
-          <Entypo name="image" size={24} color={Global.colors.violet} />
+          <Entypo name="image" size={24} color={Global.colors.green} />
           <Text style={style.pressable_text}>Зураг</Text>
         </View>
-      )}
-      {image && <Image source={{ uri: image }} style={style.image} />}
+      {/*  )} */}
+      {/* {image && <Image source={{ uri: image }} style={style.image} />} */}
     </Pressable>
   );
 };
@@ -54,7 +54,7 @@ const style = StyleSheet.create({
     borderColor: Global.colors.whiteBorder,
     borderWidth: 1,
     borderRadius: 16,
-    backgroundColor: "#EEE5FF",
+    backgroundColor: Global.colors.whiteGreen,
     width: "40%",
     padding: 16,
     display: "flex",
@@ -63,7 +63,7 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   pressable_text: {
-    color: Global.colors.violet,
+    color: Global.colors.green,
     fontWeight: "bold",
   },
   image: {

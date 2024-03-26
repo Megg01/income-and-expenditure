@@ -6,13 +6,15 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { useRouter } from "expo-router";
 import Global from "@/constants/Global";
 import {
   Button,
   Camera,
+  DatePicker,
   DropdownHeader,
+  NormalTextInput,
   PickerImage,
   Select,
   Upload,
@@ -24,14 +26,14 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { IconButton } from "react-native-paper";
-import { Entypo } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { InputTypes } from "@/static/types";
-type Props = {
-  type: "in" | "ex";
-};
+import request from "@/utils/customRequest";
+import { useUser } from "@clerk/clerk-expo";
 
 const Index: React.FC = () => {
   const router = useRouter();
+  const userId = useUser()?.user?.id;
   const [value, setValue] = useState<any>("₮0");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("1");
@@ -44,17 +46,17 @@ const Index: React.FC = () => {
   //header
   const [selected, setSelected] = useState("1");
 
+  // transaction
+  const [to, setTo] = useState<any>(null);
+
+  // date
+  const [date, setDate] = useState<Date>(new Date());
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["15%", "20%"], []);
 
   useEffect(() => {
-    console.log("USEEFCECT");
-    if (image) {
-      setCamera(null);
-    }
-    if (camera) {
-      setImage(null);
-    }
+    bottomSheetModalRef.current?.close();
   }, [image !== null, camera !== null]);
 
   const handleChange = (text: string) => {
@@ -77,13 +79,24 @@ const Index: React.FC = () => {
 
   const onContinuePress = () => {
     const body = {
-      value: value,
-      desc: desc,
+      user: userId,
+      value: parseInt(value.split("₮")[1]),
+      description: desc,
       category: category,
-      camera: camera,
-      image: image,
+      image: selected === "3" ? null : image ? image : camera ? camera : null,
+      date: date,
     };
-    console.log("🚀 ~ onContinuePress ~ body:", body);
+    request({
+      method: "POST",
+      url:
+        selected === "1"
+          ? "/incomes"
+          : selected === "2"
+          ? "/expenses"
+          : "/transfers",
+      body: body,
+      isNotification: true,
+    });
   };
 
   return (
@@ -118,7 +131,7 @@ const Index: React.FC = () => {
         ]}
       >
         <View style={style.inputContainer}>
-          <Text style={style.text}>Хэр их вэ?</Text>
+          <Text style={style.text}>Мөнгөн дүн</Text>
           <TextInput
             style={style.input}
             value={value}
@@ -130,21 +143,87 @@ const Index: React.FC = () => {
         </View>
         <View style={style.botomContainer}>
           <View style={style.inputFieldsContainer}>
-            <Select
-              data={IncomeCategories}
-              value={category}
-              handleChange={handleSelectCatChange}
-            />
-            <TextInput
+            {selected !== "3" && (
+              <Select
+                data={selected === "1" ? IncomeCategories : ExpenseCategories}
+                value={category}
+                handleChange={handleSelectCatChange}
+              />
+            )}
+            {selected === "3" && (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <NormalTextInput
+                  placeholder="Хэн рүү"
+                  value={to}
+                  setValue={setTo}
+                  width="90%"
+                />
+                <FontAwesome6
+                  name="money-bill-transfer"
+                  size={20}
+                  color={Global.colors.green}
+                />
+              </View>
+            )}
+            <NormalTextInput
               placeholder="Тайлбар"
-              numberOfLines={2}
               value={desc}
-              onChangeText={setDesc}
-              lineBreakStrategyIOS="push-out"
-              placeholderTextColor={Global.colors.gray}
-              style={style.textInput}
+              setValue={setDesc}
+              numLines={2}
             />
-            <Upload onPress={handlePresentModalPress} />
+
+            <DatePicker value={date} setValue={setDate} />
+
+            {!(image || camera) && <Upload onPress={handlePresentModalPress} />}
+
+            {(image || camera) && (
+              <View
+                style={{
+                  height: "35%",
+                  width: "35%",
+                }}
+              >
+                <View
+                  style={{
+                    position: "absolute",
+                    borderRadius: 50,
+                    margin: -20,
+                    top: 0,
+                    right: 0,
+                    zIndex: 2,
+                  }}
+                >
+                  <IconButton
+                    icon="close"
+                    style={{
+                      backgroundColor: Global.colors.white,
+                      borderWidth: 1,
+                    }}
+                    size={14}
+                    iconColor={Global.colors.text}
+                    borderless={false}
+                    onPress={() => {
+                      setCamera(null);
+                      setImage(null);
+                    }}
+                  />
+                </View>
+                <Image
+                  source={{ uri: camera || image }}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                  }}
+                />
+              </View>
+            )}
           </View>
           <Button
             label="Оруулах"
@@ -221,7 +300,7 @@ const style = StyleSheet.create({
   inputFieldsContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     gap: 20,
   },
   text: {

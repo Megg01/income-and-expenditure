@@ -19,6 +19,8 @@ import Upload from "./upload";
 import Camera from "./camera";
 import PickerImage from "./image-picker";
 import DropdownHeader from "./dropdown-header";
+import NormalTextInput from "./normal-text-input";
+import DatePicker from "./date-picker";
 
 export {
   TextInput,
@@ -42,4 +44,6 @@ export {
   Camera,
   PickerImage,
   DropdownHeader,
+  NormalTextInput,
+  DatePicker,
 };

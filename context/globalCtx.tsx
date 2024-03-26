@@ -5,14 +5,12 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 
 interface GlobalContextInterface {
-  token: string | null;
-  //   isAuthenticated: boolean;
-  //   login(email: string, password: string): Promise<boolean>;
-  //   logout(): Promise<boolean>;
+  user: string | undefined;
+  setUser: (user: string) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 const GlobalContext = createContext<GlobalContextInterface>(
@@ -20,9 +18,10 @@ const GlobalContext = createContext<GlobalContextInterface>(
 );
 
 const GlobalProvider = (props: React.PropsWithChildren<any>) => {
-  const token = "";
+  const [user, setUser] = useState<string | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
   return (
-    <GlobalContext.Provider value={{ token }}>
+    <GlobalContext.Provider value={{ user, setUser, loading, setLoading }}>
       {props.children}
     </GlobalContext.Provider>
   );

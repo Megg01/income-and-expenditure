@@ -8,15 +8,10 @@ import {
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import React, { memo, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  Text,
-  SafeAreaView,
-  Platform,
-} from "react-native";
+import { View, StyleSheet, Pressable, Text, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { showMessage } from "react-native-flash-message";
+import Global from "@/constants/Global";
 
 const Index = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -117,9 +112,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     position: "relative",
-    paddingHorizontal: 20,
+    paddingHorizontal: Global.padding.inputMoney,
     height: "100%",
-    paddingTop: Platform.OS === "ios" ? 0 : 60,
+    paddingTop: Platform.OS === "ios" ? 50 : 60,
   },
   button: {
     margin: 8,

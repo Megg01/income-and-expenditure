@@ -33,7 +33,7 @@ const Index: React.FC<Props> = ({
   if (customStyle) {
     return (
       <Button
-        style={(style.button, { ...customStyle })}
+        style={[style.button, customStyle]}
         mode={mode}
         onPress={handlePress}
         buttonColor={btnColor}
