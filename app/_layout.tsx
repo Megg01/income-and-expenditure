@@ -10,6 +10,7 @@ import { PaperProvider } from "react-native-paper";
 import { GlobalContext, GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
 import Loader from "./(app)/screens/loader";
+import request from "@/utils/customRequest";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -32,6 +33,18 @@ const tokenCache = {
   },
 };
 
+const fetchUserData = async (context: any, userId: string) => {
+  await request({
+    url: `user/${userId}`,
+  }).then((response: any) => {
+    console.log("🚀 ~ fetchUserData ~ response:", response);
+    if (response?.success) {
+      context?.setUserInfo(response?.data);
+      context?.stopLoading();
+    }
+  });
+};
+
 const InitialLayout = () => {
   const { isLoaded, isSignedIn, userId } = useAuth();
   const segments = useSegments();
@@ -48,7 +61,7 @@ const InitialLayout = () => {
     }
 
     if (isSignedIn) {
-      context?.setUser(userId);
+      fetchUserData(context, userId);
     }
   }, [isSignedIn]);
 

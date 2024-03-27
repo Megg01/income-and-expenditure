@@ -96,10 +96,10 @@ const Index: React.FC = () => {
       method: "POST",
       url:
         selected === "1"
-          ? "/income"
+          ? "income"
           : selected === "2"
-          ? "/expense"
-          : "/transfer",
+          ? "expense"
+          : "transfer",
       body: body,
       isNotification: true,
     }).then((response: any) => {

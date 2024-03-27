@@ -29,7 +29,7 @@ const style = StyleSheet.create({
   text: {
     paddingTop: 2,
     color: Global.colors.text,
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: "bold",
   },
 });

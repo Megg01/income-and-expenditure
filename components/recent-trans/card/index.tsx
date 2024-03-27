@@ -4,6 +4,7 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import Global from "@/constants/Global";
 import { formatCurrency } from "@/utils";
 import Shopping from "@/assets/icons/shopping.png";
+import formatDate from "@/utils/dateFormat";
 
 type Props = {
   title: string;
@@ -16,12 +17,14 @@ type Props = {
     | "subscription"
     | "transport"
     | "salary"
-    | "passive";
-  isIncome: boolean;
+    | "passive"
+    | "income"
+    | "expense"
+    | "transfer";
   date: string;
 };
 
-const Component = ({ title, content, value, type, isIncome, date }: Props) => (
+const Component = ({ title, content, value, type, date }: Props) => (
   <Card
     contentStyle={style.card}
     theme={{ roundness: 24 }}
@@ -41,12 +44,13 @@ const Component = ({ title, content, value, type, isIncome, date }: Props) => (
       <Text
         style={{
           ...style.value,
-          color: isIncome ? Global.colors.income : Global.colors.expense,
+          color:
+            type === "income" ? Global.colors.income : Global.colors.expense,
         }}
       >
-        {formatCurrency(value * (type === "in" ? 1 : -1))}
+        {formatCurrency(value * (type === "income" ? 1 : -1))}
       </Text>
-      <Text style={style.date}>{date}</Text>
+      <Text style={style.date}>{formatDate(date, false)}</Text>
     </View>
   </Card>
 );
@@ -72,7 +76,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
   },
-  iconContainer:{
+  iconContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
