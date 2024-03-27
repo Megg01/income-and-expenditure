@@ -1,6 +1,7 @@
 import React, {
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -30,8 +31,10 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { InputTypes } from "@/static/types";
 import request from "@/utils/customRequest";
 import { useUser } from "@clerk/clerk-expo";
+import { GlobalContext } from "@/context/globalCtx";
 
 const Index: React.FC = () => {
+  const context = useContext(GlobalContext);
   const router = useRouter();
   const userId = useUser()?.user?.id;
   const [value, setValue] = useState<any>("₮0");
@@ -73,11 +76,11 @@ const Index: React.FC = () => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
+  // const handleSheetChanges = useCallback((index: number) => {
+  //   console.log("handleSheetChanges", index);
+  // }, []);
 
-  const onContinuePress = () => {
+  const onContinuePress = async () => {
     const body = {
       user: userId,
       value: parseInt(value.split("₮")[1]),
@@ -86,16 +89,23 @@ const Index: React.FC = () => {
       image: selected === "3" ? null : image ? image : camera ? camera : null,
       date: date,
     };
-    request({
+
+    context?.startLoading();
+
+    await request({
       method: "POST",
       url:
         selected === "1"
-          ? "/incomes"
+          ? "/income"
           : selected === "2"
-          ? "/expenses"
-          : "/transfers",
+          ? "/expense"
+          : "/transfer",
       body: body,
       isNotification: true,
+    }).then((response: any) => {
+      if (response?.success) {
+        context?.stopLoading();
+      }
     });
   };
 
@@ -109,13 +119,15 @@ const Index: React.FC = () => {
             router.back();
           }}
         />
-      </View>
-      <View style={style.dropdownHeader}>
-        <DropdownHeader
-          data={InputTypes}
-          selected={selected}
-          handleChange={setSelected}
-        />
+        </View>
+        <View style={style.dropdownHeader}>
+          <DropdownHeader
+            data={InputTypes}
+            selected={selected}
+            handleChange={setSelected}
+          />
+        {/* </View> */}
+        {/* <View /> */}
       </View>
       <View
         style={[
@@ -236,7 +248,7 @@ const Index: React.FC = () => {
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
+        // onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.contentContainer}>
           <Camera value={camera} setValue={setCamera} />
@@ -260,12 +272,17 @@ const style = StyleSheet.create({
     paddingLeft: 10,
     width: "100%",
     zIndex: 2,
+    // display: "flex",
+    // flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "space-between",
+    // borderWidth: 1
   },
   dropdownHeader: {
     position: "absolute",
-    width: "60%",
+    width: "70%",
     paddingTop: 50,
-    left: "48%",
+    left: "47%",
     transform: [{ translateX: -50 }],
     zIndex: 2,
   },

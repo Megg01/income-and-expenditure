@@ -9,6 +9,7 @@ import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
 import { GlobalContext, GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
+import Loader from "./(app)/screens/loader";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -82,6 +83,7 @@ export default function RootLayout() {
       <GlobalProvider>
         <PaperProvider>
           <FlashMessage position="top" />
+          <Loader />
           <InitialLayout />
         </PaperProvider>
       </GlobalProvider>

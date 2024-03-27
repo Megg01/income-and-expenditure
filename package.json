@@ -24,7 +24,6 @@
     "@react-navigation/stack": "^6.3.23",
     "@shopify/react-native-skia": "^0.1.241",
     "axios": "^1.6.7",
-    "cloudinary-react-native": "^0.3.0",
     "expo": "~50.0.8",
     "expo-asset": "~9.0.2",
     "expo-auth-session": "^5.4.0",

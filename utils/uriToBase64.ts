@@ -2,8 +2,6 @@ import * as FileSystem from "expo-file-system";
 
 async function uriToBase64(uri: string): Promise<string | undefined> {
   try {
-    const fileInfo = await FileSystem.getInfoAsync(uri);
-
     const result = await FileSystem.readAsStringAsync(uri, {
       encoding: FileSystem.EncodingType.Base64,
     });

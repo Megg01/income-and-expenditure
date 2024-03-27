@@ -1,11 +1,8 @@
 import axios from "axios";
 import { API } from "@/config";
 import { showMessage } from "react-native-flash-message";
-import uriToBase64 from "./uriToBase64";
 import dayjs from "dayjs";
-import uriToFile from "./uriToFile";
-import uploadImage from "./uploadImage";
-
+import uriToBase64 from "./uriToBase64";
 interface Props {
   method: string;
   url: string;
@@ -24,34 +21,28 @@ const request = async ({
   let image: any = null;
 
   if (body?.image) {
-    image = await uriToBase64(body?.image);
-    const a = uploadImage(image);
-    console.log("🚀 ~ image:", a);
+    image = await uriToBase64(body.image);
   }
 
-  // await axios({
-  //   method,
-  //   url: API + url,
-  //   data: body,
-  //   headers: {
-  //     "Content-Type": "application/json; multipart/form-data; charset=utf-8",
-  //   },
-  // })
-  //   .then((response: any) => {
-  //     result = response?.data;
-  //     if (isNotification) {
-  //       showMessage({
-  //         message: response?.message,
-  //         type: "success",
-  //       });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     showMessage({
-  //       message: error?.message,
-  //       type: "warning",
-  //     });
-  //   });
+  const response = await axios({
+    method,
+    responseEncoding: "utf8",
+    url: API + url,
+    data: { ...body, image },
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  if (response) {
+    result = response?.data;
+    if (isNotification && result) {
+      showMessage({
+        message:
+          result?.message || (result?.success ? "Амжилттай" : "Амжилтгүй"),
+        type: result?.success ? "success" : "warning",
+      });
+    }
+  }
 
   return result;
 };

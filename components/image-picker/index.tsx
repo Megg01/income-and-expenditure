@@ -1,13 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Image,
-  View,
-  Platform,
-  Pressable,
-  Text,
-  StyleSheet,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Entypo } from "@expo/vector-icons";
 import Global from "@/constants/Global";
@@ -36,13 +28,10 @@ const PickerImage = ({ value, setValue }: Props) => {
 
   return (
     <Pressable style={style.pressable} onPress={pickImage}>
-      {/* {!image && ( */}
-        <View style={{ display: "flex", alignItems: "center" }}>
-          <Entypo name="image" size={24} color={Global.colors.green} />
-          <Text style={style.pressable_text}>Зураг</Text>
-        </View>
-      {/*  )} */}
-      {/* {image && <Image source={{ uri: image }} style={style.image} />} */}
+      <View style={{ display: "flex", alignItems: "center" }}>
+        <Entypo name="image" size={24} color={Global.colors.green} />
+        <Text style={style.pressable_text}>Зураг</Text>
+      </View>
     </Pressable>
   );
 };

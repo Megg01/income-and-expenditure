@@ -4,7 +4,6 @@ import { Camera } from "expo-camera";
 import { useRef, useState } from "react";
 import {
   Button,
-  Image,
   Modal,
   Pressable,
   StyleSheet,
@@ -27,12 +26,10 @@ const Index = ({ value, setValue }: Props) => {
   const cameraRef = useRef(null);
 
   if (!permission) {
-    // Camera permissions are still loading
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
       <View>
         <Text style={{ textAlign: "center" }}>
@@ -56,13 +53,10 @@ const Index = ({ value, setValue }: Props) => {
 
   return (
     <Pressable style={style.pressable} onPress={onCameraPress}>
-      {/* {!image && ( */}
       <View style={{ display: "flex", alignItems: "center" }}>
         <Entypo name="camera" size={24} color={Global.colors.green} />
         <Text style={style.pressable_text}>Камер</Text>
       </View>
-      {/*  )} */}
-      {/* {image && <Image source={{ uri: image }} style={style.image} />} */}
       <Modal visible={isCamera}>
         <Camera ref={(ref) => setCamera(ref)} style={styles.camera}></Camera>
         <View style={styles.close}>
@@ -76,7 +70,6 @@ const Index = ({ value, setValue }: Props) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={onPressCapture}>
             <Entypo name="camera" size={50} color={Global.colors.whiteGreen} />
-            {/* <Text style={styles.text}>Зураг авах</Text> */}
           </TouchableOpacity>
         </View>
       </Modal>
