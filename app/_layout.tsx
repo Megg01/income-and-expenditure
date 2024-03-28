@@ -7,10 +7,10 @@ import React, { useContext, useEffect } from "react";
 // import { AuthProvider, AuthContext } from "@/context/authContext";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
-import { GlobalContext, GlobalProvider } from "@/context/globalCtx";
+import { GlobalContext, GlobalProvider } from "@/context/index";
 import FlashMessage from "react-native-flash-message";
-import Loader from "./(app)/screens/loader";
-import request from "@/utils/customRequest";
+// import Loader from "./(app)/screens/loader";
+import request from "@/context/fetch/request";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -33,23 +33,27 @@ const tokenCache = {
   },
 };
 
-const fetchUserData = async (context: any, userId: string) => {
-  await request({
-    url: `user/${userId}`,
-  }).then((response: any) => {
-    console.log("🚀 ~ fetchUserData ~ response:", response);
-    if (response?.success) {
-      context?.setUserInfo(response?.data);
-      context?.stopLoading();
-    }
-  });
-};
-
 const InitialLayout = () => {
   const { isLoaded, isSignedIn, userId } = useAuth();
   const segments = useSegments();
   const router = useRouter();
   const context = useContext(GlobalContext);
+
+  const fetchUserData = async (context: any, userId: string) => {
+    try {
+      // context?.startLoading();
+      await request({
+        url: `user/${userId}`,
+      }).then((response: any) => {
+        if (response?.success) {
+          // context?.setUserInfo(response?.data);
+          // context?.stopLoading();
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -92,11 +96,12 @@ export default function RootLayout() {
     <ClerkProvider
       tokenCache={tokenCache}
       publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      // navigate={(to) => navigate(to)}
     >
       <GlobalProvider>
         <PaperProvider>
           <FlashMessage position="top" />
-          <Loader />
+          {/* <Loader /> */}
           <InitialLayout />
         </PaperProvider>
       </GlobalProvider>

@@ -4,26 +4,32 @@ import { router } from "expo-router";
 import ButtonOpacity from "../button-opacity";
 import { FlashList } from "@shopify/flash-list";
 import Card from "./card";
-import { GlobalContext } from "@/context/globalCtx";
-import request from "@/utils/customRequest";
+// import { GlobalContext } from "@/context/globalCtx";
+import request from "@/context/fetch/request";
 import { useUser } from "@clerk/clerk-expo";
+import { GlobalContext } from "@/context";
 
 const Index = () => {
   const user = useUser()?.user?.id;
+  const context = useContext(GlobalContext);
+  console.log("🚀 ~ Index ~ context:", context);
 
   const [recentTransactions, setRecentTransactions] = useState();
 
   useEffect(() => {
-    request({
-      url: "transaction/all",
-      method: "POST",
-      body: { user },
-    }).then((response) => {
-      if (response?.success) {
-        console.log("🚀 ~ useEffect ~ response:", response);
-        setRecentTransactions(response?.data?.slice(0, 3));
-      }
-    });
+    context
+      .request({
+        url: "transaction/all",
+        method: "POST",
+        model: "transactionall",
+        body: { user },
+      })
+      .then((response: any) => {
+        console.log("🚀 ~ .then ~ response:", response);
+        if (response?.success) {
+          setRecentTransactions(response?.data?.slice(0, 3));
+        }
+      });
   }, []);
 
   const renderItem = (item: any) => {

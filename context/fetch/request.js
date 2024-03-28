@@ -2,23 +2,29 @@ import axios from "axios";
 import { API } from "@/config";
 import { showMessage } from "react-native-flash-message";
 import dayjs from "dayjs";
-import uriToBase64 from "./uriToBase64";
-interface Props {
-  method?: string;
-  url: string;
-  isNotification?: boolean;
-  body?: Object | null | any;
-}
+import uriToBase64 from "../../utils/uriToBase64";
+// interface Props {
+//   method?: string;
+//   url: string;
+//   model?: string;
+//   ismessage?: boolean;
+//   body?: Object | null | any;
+// }
+
+/**
+ * Makes a HTTP request.
+ * @param {{ method?: string, url: string, model?: string, ismessage?: boolean, body?: object | null }} params - The request parameters.
+ */
 
 const request = async ({
   method = "GET",
   url,
-  isNotification = false,
+  model,
+  ismessage = false,
   body = null,
-}: Props) => {
-  console.log("🚀 ~ body:", body);
+}) => {
   let result = null;
-  let image: any = null;
+  let image = null;
   let response = null;
   try {
     if (body?.image) {
@@ -41,6 +47,7 @@ const request = async ({
         url: API + url,
         data: { ...body, image },
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json; charset=utf-8",
         },
       });
@@ -53,7 +60,7 @@ const request = async ({
           type: "danger",
         });
       }
-      if (isNotification && result) {
+      if (ismessage && result) {
         showMessage({
           message:
             result?.message || (result?.success ? "Амжилттай" : "Амжилтгүй"),
@@ -62,7 +69,7 @@ const request = async ({
       }
     }
   } catch (error) {
-    if (isNotification) {
+    if (ismessage) {
       showMessage({
         message: "Хүсэлт илгээхэд алдаа гарлаа",
         type: "danger",

@@ -2,20 +2,20 @@ import { StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
 import { Balance, Card, InEx, RecentTrans, Spend } from "@/components";
 import { memo, useContext } from "react";
 import Global from "@/constants/Global";
-import { GlobalContext } from "@/context/globalCtx";
+import { GlobalContext } from "@/context";
 
 const Index = () => {
-  const context = useContext(GlobalContext);
-  const { userInfo } = context;
-  console.log("🚀 ~ Index ~ userInfo:", userInfo);
+  // const context = useContext(GlobalContext);
+  // const { userInfo } = context?.userInfo;
+  // console.log("🚀 ~ Index ~ userInfo:", userInfo);
 
   return (
     <ScrollView style={style.container}>
-      <Balance value={userInfo?.totalIncome - userInfo?.totalExpense | 0} />
+      {/* <Balance value={(userInfo?.totalIncome - userInfo?.totalExpense) | 0} />
       <View style={style.inexContainer}>
-        <InEx type="in" value={userInfo?.totalIncome} />
-        <InEx type="ex" value={userInfo?.totalExpense} />
-      </View>
+        <InEx type="in" value={userInfo?.totalIncome | 0} />
+        <InEx type="ex" value={userInfo?.totalExpense | 0} />
+      </View> */}
       <Spend />
       <RecentTrans />
     </ScrollView>

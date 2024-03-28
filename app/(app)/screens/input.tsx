@@ -29,12 +29,12 @@ import {
 import { IconButton } from "react-native-paper";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { InputTypes } from "@/static/types";
-import request from "@/utils/customRequest";
+import request from "@/context/fetch/request";
 import { useUser } from "@clerk/clerk-expo";
-import { GlobalContext } from "@/context/globalCtx";
+import { GlobalContext } from "@/context/index";
 
-const Index: React.FC = () => {
-  const context = useContext(GlobalContext);
+const Index = () => {
+  // const context = useContext(GlobalContext);
   const router = useRouter();
   const userId = useUser()?.user?.id;
   const [value, setValue] = useState<any>("₮0");
@@ -90,23 +90,19 @@ const Index: React.FC = () => {
       date: date,
     };
 
-    context?.startLoading();
+    // context?.startLoading();
 
-    await request({
-      method: "POST",
-      url:
-        selected === "1"
-          ? "income"
-          : selected === "2"
-          ? "expense"
-          : "transfer",
-      body: body,
-      isNotification: true,
-    }).then((response: any) => {
-      if (response?.success) {
-        context?.stopLoading();
-      }
-    });
+    // await request({
+    //   method: "POST",
+    //   url:
+    //     selected === "1" ? "income" : selected === "2" ? "expense" : "transfer",
+    //   body: body,
+    //   ismessage: true,
+    // }).then((response: any) => {
+    //   if (response?.success) {
+    //     context?.stopLoading();
+    //   }
+    // });
   };
 
   return (
@@ -119,13 +115,13 @@ const Index: React.FC = () => {
             router.back();
           }}
         />
-        </View>
-        <View style={style.dropdownHeader}>
-          <DropdownHeader
-            data={InputTypes}
-            selected={selected}
-            handleChange={setSelected}
-          />
+      </View>
+      <View style={style.dropdownHeader}>
+        <DropdownHeader
+          data={InputTypes}
+          selected={selected}
+          handleChange={setSelected}
+        />
         {/* </View> */}
         {/* <View /> */}
       </View>
