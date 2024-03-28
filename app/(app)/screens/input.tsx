@@ -29,18 +29,15 @@ import {
 import { IconButton } from "react-native-paper";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { InputTypes } from "@/static/types";
-import request from "@/utils/customRequest";
-import { useUser } from "@clerk/clerk-expo";
 import { GlobalContext } from "@/context/globalCtx";
+import { showMessage } from "react-native-flash-message";
 
 const Index: React.FC = () => {
   const context = useContext(GlobalContext);
   const router = useRouter();
-  const userId = useUser()?.user?.id;
   const [value, setValue] = useState<any>("₮0");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("1");
-  const [loading, setLoading] = useState(false);
 
   //image upload
   const [camera, setCamera] = useState<any>(null);
@@ -82,7 +79,7 @@ const Index: React.FC = () => {
 
   const onContinuePress = async () => {
     const body = {
-      user: userId,
+      to: to,
       value: parseInt(value.split("₮")[1]),
       description: desc,
       category: category,
@@ -90,23 +87,42 @@ const Index: React.FC = () => {
       date: date,
     };
 
-    context?.startLoading();
-
-    await request({
-      method: "POST",
+    if (body.value <= 0) {
+      showMessage({
+        type: "warning",
+        message: "Мөнгөн дүнгээ зөв оруулна уу",
+      });
+      return;
+    }
+    const res = await context?.request({
+      model: "input",
       url:
-        selected === "1"
-          ? "income"
-          : selected === "2"
-          ? "expense"
-          : "transfer",
+        selected === "1" ? "income" : selected === "2" ? "expense" : "transfer",
       body: body,
       isNotification: true,
-    }).then((response: any) => {
-      if (response?.success) {
-        context?.stopLoading();
-      }
     });
+    if (res?.success) {
+      router.back();
+      // await context?.request({
+      //   model:
+      //     selected === "1"
+      //       ? "incomeall"
+      //       : selected === "2"
+      //       ? "expenseall"
+      //       : "transferall",
+      //   url:
+      //     selected === "1"
+      //       ? "income/all"
+      //       : selected === "2"
+      //       ? "expense/all"
+      //       : "transfer/all",
+      // });
+
+      // await context?.request({
+      //   url: "transaction/all",
+      //   model: "transactionall",
+      // });
+    }
   };
 
   return (
@@ -119,13 +135,13 @@ const Index: React.FC = () => {
             router.back();
           }}
         />
-        </View>
-        <View style={style.dropdownHeader}>
-          <DropdownHeader
-            data={InputTypes}
-            selected={selected}
-            handleChange={setSelected}
-          />
+      </View>
+      <View style={style.dropdownHeader}>
+        <DropdownHeader
+          data={InputTypes}
+          selected={selected}
+          handleChange={setSelected}
+        />
         {/* </View> */}
         {/* <View /> */}
       </View>
@@ -239,8 +255,14 @@ const Index: React.FC = () => {
           </View>
           <Button
             label="Оруулах"
+            btnColor={
+              selected === "1"
+                ? Global.colors.income
+                : selected === "2"
+                ? Global.colors.expense
+                : Global.colors.blue
+            }
             onPress={onContinuePress}
-            loading={loading}
           ></Button>
         </View>
       </View>

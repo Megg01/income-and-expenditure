@@ -98,6 +98,6 @@
 // export default memo(Index);
 import { Redirect, Stack } from "expo-router";
 
-export default function BudgetLayout() {
+export default function TransLayout() {
   return <Redirect href={"/(app)/screens/input"} />;
 }

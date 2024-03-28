@@ -5,6 +5,7 @@ import Global from "@/constants/Global";
 import { formatCurrency } from "@/utils";
 import Shopping from "@/assets/icons/shopping.png";
 import formatDate from "@/utils/dateFormat";
+import { router } from "expo-router";
 
 type Props = {
   title: string;
@@ -22,38 +23,52 @@ type Props = {
     | "expense"
     | "transfer";
   date: string;
+  id: string;
+  item: any;
 };
 
-const Component = ({ title, content, value, type, date }: Props) => (
-  <Card
-    contentStyle={style.card}
-    theme={{ roundness: 24 }}
-    mode="contained"
-    onPress={() => alert("You pressed a button")}
-  >
-    <View style={style.first}>
-      <View style={style.iconContainer}>
-        <Image source={Shopping} style={{ width: 40, height: 40 }} />
+const Component = ({ id, title, content, value, type, date, item }: Props) => {
+  const navigateTo = () => {
+    router.setParams(item);
+    router.push({ pathname: `/transactions/${id}`, params: item });
+  };
+
+  return (
+    <Card
+      contentStyle={style.card}
+      theme={{ roundness: 24 }}
+      mode="contained"
+      onPress={() => navigateTo()}
+      id={id}
+    >
+      <View style={style.first}>
+        <View style={style.iconContainer}>
+          <Image source={Shopping} style={{ width: 40, height: 40 }} />
+        </View>
+        <View style={style.mid}>
+          <Text style={style.title}>{title}</Text>
+          <Text style={style.content}>{content}</Text>
+        </View>
       </View>
-      <View style={style.mid}>
-        <Text style={style.title}>{title}</Text>
-        <Text style={style.content}>{content}</Text>
+      <View style={style.last}>
+        <Text
+          style={{
+            ...style.value,
+            color:
+              type === "income"
+                ? Global.colors.income
+                : type === "expense"
+                ? Global.colors.expense
+                : Global.colors.blue,
+          }}
+        >
+          {formatCurrency(value * (type === "expense" ? -1 : 1))}
+        </Text>
+        <Text style={style.date}>{formatDate(date, false)}</Text>
       </View>
-    </View>
-    <View style={style.last}>
-      <Text
-        style={{
-          ...style.value,
-          color:
-            type === "income" ? Global.colors.income : Global.colors.expense,
-        }}
-      >
-        {formatCurrency(value * (type === "income" ? 1 : -1))}
-      </Text>
-      <Text style={style.date}>{formatDate(date, false)}</Text>
-    </View>
-  </Card>
-);
+    </Card>
+  );
+};
 
 export default React.memo(Component);
 

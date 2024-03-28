@@ -1,7 +1,9 @@
-import React, {
-  createContext,
-  useState,
-} from "react";
+import React, { createContext, useState } from "react";
+import axios from "axios";
+import { API } from "@/config";
+import { showMessage } from "react-native-flash-message";
+import uriToBase64 from "../utils/uriToBase64";
+import { useUser } from "@clerk/clerk-expo";
 
 interface GlobalContextInterface {
   user: string | undefined;
@@ -12,24 +14,97 @@ interface GlobalContextInterface {
   setLoading: (loading: boolean) => void;
   startLoading: () => void;
   stopLoading: () => void;
+  request: (arg: Props) => Promise<any>;
+  data: Record<string, any>;
+  updateData: (key: string, newData: any) => void;
 }
+
+type Props = {
+  method?: string;
+  url: string;
+  isNotification?: boolean;
+  body?: Object | null | any;
+  model: string;
+  storeContext?: boolean;
+};
 
 const GlobalContext = createContext<GlobalContextInterface>(
   {} as GlobalContextInterface
 );
 
 const GlobalProvider = (props: React.PropsWithChildren<any>) => {
+  const id = useUser()?.user?.id;
   const [user, setUser] = useState<string | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Record<string, any>>({});
 
   const [userInfo, setUserInfo] = useState<any>();
 
-  const startLoading = () => {
-    setLoading(true);
+  const startLoading = () => setLoading(true);
+  const stopLoading = () => setLoading(false);
+
+  const updateData = (key: string, newData: any) => {
+    setData((prev) => ({
+      ...prev,
+      [key]: newData,
+    }));
   };
 
-  const stopLoading = () => {
-    setLoading(false);
+  const request = async ({
+    method = "POST",
+    url,
+    isNotification = false,
+    body = null,
+    model,
+    storeContext = true,
+  }: Props) => {
+    startLoading();
+    let result = null;
+    try {
+      let image = body?.image ? await uriToBase64(body.image) : null;
+
+      console.log("🚀 ~ GlobalProvider ~ url:", API + url);
+
+      const response = await axios({
+        method,
+        url: API + url,
+        responseEncoding: "utf8",
+        data: method !== "GET" ? { ...body, user: id, image } : undefined,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      });
+      if (response) {
+        result = response?.data;
+        if (result) {
+          if (storeContext && model !== "delete") {
+            updateData(model, result?.data);
+          }
+          if (isNotification) {
+            showMessage({
+              message:
+                result?.message ||
+                (result?.success ? "Амжилттай" : "Амжилтгүй"),
+              type: result?.success ? "success" : "warning",
+            });
+          }
+        }
+        if (!result) {
+          showMessage({
+            message: "Хүсэлт илгээхэд алдаа гарлаа",
+            type: "danger",
+          });
+        }
+      }
+    } catch (error) {
+      if (isNotification) {
+        showMessage({
+          message: "Хүсэлт илгээхэд алдаа гарлаа",
+          type: "danger",
+        });
+      }
+    } finally {
+      stopLoading();
+    }
+    return result;
   };
 
   return (
@@ -43,6 +118,9 @@ const GlobalProvider = (props: React.PropsWithChildren<any>) => {
         setLoading,
         startLoading,
         stopLoading,
+        request,
+        data,
+        updateData,
       }}
     >
       {props.children}

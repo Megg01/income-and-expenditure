@@ -1,5 +1,11 @@
 import { Tabs, useRouter } from "expo-router";
-import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  FontAwesome6,
+  Foundation,
+  Ionicons,
+} from "@expo/vector-icons";
 import { Platform, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import Global from "@/constants/Global";
@@ -34,6 +40,24 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="all"
+        options={{
+          // headerShown: true,
+          header: () => <AppBar />,
+          tabBarLabel: "Нийт",
+          title: "Нийт",
+          tabBarActiveTintColor: Global.tabIconFocused,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome6
+              size={28}
+              style={{ marginBottom: -3 }}
+              name="money-bill-transfer"
+              color={focused ? Global.tabIconFocused : Global.tabIconDefault}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="trans"
         options={{
           headerShown: true,
@@ -57,7 +81,7 @@ export default function TabsLayout() {
         })}
       />
       <Tabs.Screen
-        name="budget"
+        name="report"
         options={{
           headerShown: true,
           tabBarLabel: "Нийт",
@@ -68,6 +92,23 @@ export default function TabsLayout() {
               size={28}
               style={{ marginBottom: -3 }}
               name="graph-bar"
+              color={focused ? Global.tabIconFocused : Global.tabIconDefault}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Профайл",
+          title: "Профайл",
+          tabBarActiveTintColor: Global.tabIconFocused,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={28}
+              style={{ marginBottom: -3 }}
+              name="person"
               color={focused ? Global.tabIconFocused : Global.tabIconDefault}
             />
           ),

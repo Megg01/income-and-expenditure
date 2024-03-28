@@ -1,36 +1,29 @@
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
 import ButtonOpacity from "../button-opacity";
 import { FlashList } from "@shopify/flash-list";
 import Card from "./card";
 import { GlobalContext } from "@/context/globalCtx";
-import request from "@/utils/customRequest";
-import { useUser } from "@clerk/clerk-expo";
 
 const Index = () => {
-  const user = useUser()?.user?.id;
+  const context = useContext(GlobalContext);
 
-  const [recentTransactions, setRecentTransactions] = useState();
+  const recentTransactions =
+    context?.data?.transactionall?.slice(0, 3) || [];
 
   useEffect(() => {
-    request({
+    context?.request({
       url: "transaction/all",
-      method: "POST",
-      body: { user },
-    }).then((response) => {
-      if (response?.success) {
-        console.log("🚀 ~ useEffect ~ response:", response);
-        setRecentTransactions(response?.data?.slice(0, 3));
-      }
+      model: "transactionall",
     });
   }, []);
 
   const renderItem = (item: any) => {
-    console.log("🚀 ~ renderItem ~ item:", item);
     return (
       <View style={{ paddingTop: 6 }}>
         <Card
+          id={item?._id}
+          item={item}
           title={item?.category}
           content={item?.description}
           value={item?.value}

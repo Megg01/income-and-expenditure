@@ -41,7 +41,12 @@ const Component = ({ title, content, value, type, isIncome, date }: Props) => (
       <Text
         style={{
           ...style.value,
-          color: isIncome ? Global.colors.income : Global.colors.expense,
+          color:
+            type === "income"
+              ? Global.colors.income
+              : type === "expense"
+              ? Global.colors.expense
+              : Global.colors.blue,
         }}
       >
         {formatCurrency(value * (type === "in" ? 1 : -1))}
@@ -72,7 +77,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
   },
-  iconContainer:{
+  iconContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

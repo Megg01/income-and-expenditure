@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 const Global = {
   colors: {
-    green: "#254745",
+    green: "#333333",
     whiteGreen: "#d8e6e5",
     white: "#FAF8F6",
     gray: "#91919F",

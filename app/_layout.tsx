@@ -4,13 +4,11 @@ import { useFonts } from "expo-font";
 import { Slot, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useContext, useEffect } from "react";
-// import { AuthProvider, AuthContext } from "@/context/authContext";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { PaperProvider } from "react-native-paper";
 import { GlobalContext, GlobalProvider } from "@/context/globalCtx";
 import FlashMessage from "react-native-flash-message";
 import Loader from "./(app)/screens/loader";
-import request from "@/utils/customRequest";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -34,14 +32,10 @@ const tokenCache = {
 };
 
 const fetchUserData = async (context: any, userId: string) => {
-  await request({
+  await context?.request({
     url: `user/${userId}`,
-  }).then((response: any) => {
-    console.log("🚀 ~ fetchUserData ~ response:", response);
-    if (response?.success) {
-      context?.setUserInfo(response?.data);
-      context?.stopLoading();
-    }
+    method: "GET",
+    model: "userInfo",
   });
 };
 

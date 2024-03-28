@@ -15,7 +15,7 @@ export type Props = {
 };
 
 const Index: React.FC<Props> = ({
-  btnColor = "#254745",
+  btnColor = "#333333",
   txtColor = "#FFF",
   label,
   onPress,

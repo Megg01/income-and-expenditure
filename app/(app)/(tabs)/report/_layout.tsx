@@ -1,7 +1,7 @@
 import { AppBar } from "@/components";
 import { Stack } from "expo-router";
 
-export default function ProfileLayout() {
+export default function ReportLayout() {
   return (
     <Stack
       screenOptions={{

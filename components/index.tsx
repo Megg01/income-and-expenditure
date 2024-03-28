@@ -21,6 +21,7 @@ import PickerImage from "./image-picker";
 import DropdownHeader from "./dropdown-header";
 import NormalTextInput from "./normal-text-input";
 import DatePicker from "./date-picker";
+import DetailWidget from "./detail-widget";
 
 export {
   TextInput,
@@ -46,4 +47,5 @@ export {
   DropdownHeader,
   NormalTextInput,
   DatePicker,
+  DetailWidget,
 };

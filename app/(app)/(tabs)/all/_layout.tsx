@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function BudgetLayout() {
+export default function AllLayout() {
   return (
     <Stack
       screenOptions={{

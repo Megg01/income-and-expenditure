@@ -6,8 +6,7 @@ import { GlobalContext } from "@/context/globalCtx";
 
 const Index = () => {
   const context = useContext(GlobalContext);
-  const { userInfo } = context;
-  console.log("🚀 ~ Index ~ userInfo:", userInfo);
+  const { userInfo } = context?.data;
 
   return (
     <ScrollView style={style.container}>
