@@ -1,44 +1,46 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React from "react";
-import Male from "@/assets/icons/male.png";
+import Wallet from "@/assets/icons/wallet.png";
 import Global from "@/constants/Global";
+import { Button } from "react-native-paper";
 
 interface Props {
   img?: string | any;
   name: string;
+  onPress: () => void;
 }
 
-const Upbar = ({ img = Male, name }: Props) => {
+const ActionLabel = ({ img = Wallet, name, onPress }: Props) => {
   return (
-    <View style={style.container}>
+    <Pressable style={style.container} onPress={onPress}>
       <View style={style.imgContainer}>
-        <Image source={img} width={64} height={64} borderRadius={50} />
+        <Image source={img} width={56} height={56} />
       </View>
-      <View>
-        <Text style={style.name}>{name}</Text>
-      </View>
-    </View>
+      <Text style={style.name}>{name}</Text>
+    </Pressable>
   );
 };
 
-export default Upbar;
+export default ActionLabel;
 
 const style = StyleSheet.create({
-  imgContainer: {
-    borderRadius: 50,
-    borderWidth: 1,
-  },
   container: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 20,
     paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: Global.colors.white,
+    borderWidth: 1,
+    borderColor: Global.colors.whiteGreen,
   },
+  imgContainer: {},
   name: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 16,
     color: Global.colors.green,
   },
 });
